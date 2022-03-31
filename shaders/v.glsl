@@ -9,6 +9,8 @@ smooth out vec3 fragColor;
 uniform mat4 xform;			// Model-to-clip space transform
 uniform vec3 color;
 uniform vec3 colorB;
+uniform int a;
+uniform float b;
 
 void main() {
 	// Transform vertex position

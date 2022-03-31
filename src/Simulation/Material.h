@@ -11,6 +11,8 @@
 #define MAT_MODEL_MATRIX "MODEL_MATRIX"
 
 #define MAT_PROP_VECTOR3 "vec3"
+#define MAT_PROP_INTEGER "int"
+#define MAT_PROP_FLOAT "float"
 
 class Material
 {

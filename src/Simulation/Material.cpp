@@ -48,7 +48,24 @@ Material::Material(std::string materialConfigFile) {
 			}
 			// Process generic attributes
 			else {
-				// Colors
+
+				// Integer
+				if (propertyValue._Starts_with(MAT_PROP_INTEGER)) {
+					propertyValue = propertyValue.substr(4, propertyValue.length() - 5);
+					int value = stoi(trim(propertyValue));
+					// Register the integer
+					registerAttribute(propertyName, SHADER_INPUT_TYPE_1I, (void*)&value);
+				}
+
+				// Float
+				if (propertyValue._Starts_with(MAT_PROP_FLOAT)) {
+					propertyValue = propertyValue.substr(6, propertyValue.length() - 7);
+					float value = stof(trim(propertyValue));
+					// Register the float
+					registerAttribute(propertyName, SHADER_INPUT_TYPE_1F, (void*) &value);
+				}
+
+				// Vector
 				if (propertyValue._Starts_with(MAT_PROP_VECTOR3)) {
 					propertyValue = propertyValue.substr(5, propertyValue.length() - 6);
 					size_t pos = propertyValue.find(",");
