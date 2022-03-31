@@ -6,6 +6,9 @@
 #include "Simulation/Shader.h"
 #include "Simulation/Material.h"
 #include <iostream>
+#include "Simulation/SimObject.h"
+#include "Simulation/Scene.h"
+#include "Simulation/Simulator.h"
 
 // Constructor
 GLState::GLState() :
@@ -37,19 +40,36 @@ void GLState::initializeGL() {
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 
+	// TEMP
+	Scene* scene = new Scene();
+	SimObject* simObject = new SimObject();
+	simObject->addComponent(new Component());
+	MeshRenderer* mr = new MeshRenderer();
+	simObject->addComponent(mr);
+	mr->mesh = new Mesh("models/bunny.obj", false);
+	mr->material = new Material("shaders/m.mat");
+	scene->registerSimObject(simObject);
+	Simulator::activeScene = scene;
+	renderers.push_back(simObject->getComponent<MeshRenderer>());
+	// END TEMP
+
 	// Initialize OpenGL state
 	initShaders();
 	initGeometry();
+}
+
+/// <summary>
+/// Registers a new renderer to the scene, so it can be included in the render loop
+/// </summary>
+/// <param name="newRenderer"></param>
+void GLState::registerRenderer(MeshRenderer* newRenderer) {
+	renderers.push_back(newRenderer);
 }
 
 // Called when window requests a screen redraw
 void GLState::paintGL() {
 	// Clear the color and depth buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// Set shader to draw with
-	glUseProgram(shader);
-	mat->applyAttributes();
 
 	// Construct a transformation matrix for the camera
 	glm::mat4 xform(1.0f);
@@ -63,6 +83,13 @@ void GLState::paintGL() {
 	// Combine transformations
 	xform = proj * view;
 
+	for (MeshRenderer* renderer : renderers) {
+
+		renderer->Render(xform);
+
+	}
+
+	/*
 	switch (objMode) {
 	case OBJMODE_TETRAHEDRON: {
 		// Scale down the tetrahedron a bit
@@ -94,6 +121,7 @@ void GLState::paintGL() {
 		mesh->draw();
 		break; }
 	}
+	*/
 
 	glUseProgram(0);
 }
@@ -157,12 +185,12 @@ void GLState::showObjFile(const std::string& filename) {
 // Create shaders and associated state
 void GLState::initShaders() {
 
-	mat = new Material("shaders/m.mat");
+	//mat = new Material("shaders/m.mat");
 	//Shader *testShader = new Shader("shaders/v.glsl", "shaders/f.glsl");
 
 	// Get uniform locations
-	shader = mat->shader->compiledShaderId;
-	xformLoc = mat->shader->uniformInputs.at(mat->modelMatrixAttributeName);
+	//shader = mat->shader->compiledShaderId;
+	//xformLoc = mat->shader->uniformInputs.at(mat->modelMatrixAttributeName);
 }
 
 // Create geometry buffers and vertex format

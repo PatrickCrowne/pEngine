@@ -60,6 +60,9 @@
     <ClCompile Include="src\Simulation\Shader.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
+    <ClCompile Include="src\Simulation\Components\Transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/gl_core_3_3.h">
@@ -96,6 +99,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Simulation\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\Components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

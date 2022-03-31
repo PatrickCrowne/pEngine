@@ -1,11 +1,13 @@
 #pragma once
+#include "Transform.h"
 class Component
 {
 public:
+	Transform* transform;
 	bool active;
-	void Awake();
-	void Update();
-	void FixedUpdate();
-	void Destroy();
+	virtual void Awake();
+	virtual void Update();
+	virtual void FixedUpdate();
+	virtual void Destroy();
 };
 

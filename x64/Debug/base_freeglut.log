@@ -1,9 +1,2 @@
-﻿  Material.cpp
-C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Material.cpp(112,38): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Material.cpp(197,90): warning C4244: 'argument': conversion from '_Ty2' to 'GLfloat', possible loss of data
-          with
-          [
-              _Ty2=int
-          ]
-C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Material.cpp(179): warning C4715: 'Material::getAttributeValue': not all control paths return a value
+﻿  Transform.cpp
   base_freeglut.vcxproj -> C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\x64\Debug\base_freeglut.exe

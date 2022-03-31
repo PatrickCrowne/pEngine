@@ -8,6 +8,7 @@
 #include "gl_core_3_3.h"
 #include "mesh.hpp"
 #include "Simulation/Material.h"
+#include "Simulation/Components/MeshRenderer.h"
 
 // Manages OpenGL state, e.g. camera transform, objects, shaders
 class GLState {
@@ -36,6 +37,9 @@ public:
 	void showTetrahedron();
 	void showObjFile(const std::string& filename);
 
+	// Object Registration
+	void registerRenderer(MeshRenderer*);
+
 	// Per-vertex attributes
 	struct Vertex {
 		glm::vec3 pos;		// Position
@@ -63,6 +67,8 @@ protected:
 	ObjMode objMode;				// Which object state are we in
 	std::string meshFilename;		// Name of the obj file being shown
 	std::unique_ptr<Mesh> mesh;		// Pointer to mesh object
+	
+	std::vector<MeshRenderer*> renderers;
 
 	// OpenGL state
 	Material* mat;		// TEMP

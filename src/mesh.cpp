@@ -143,6 +143,7 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 	// Delete local copy of geometry
 	if (!keepLocalGeometry)
 		vertices.clear();
+
 }
 
 // Release resources

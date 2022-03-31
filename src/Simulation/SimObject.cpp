@@ -21,13 +21,29 @@ SimObject::~SimObject() {
 }
 
 /// <summary>
+/// Adds a component to this simObject
+/// </summary>
+/// <param name="newComponent"></param>
+void SimObject::addComponent(Component* newComponent) {
+	SimObject::components.push_back(newComponent);
+	newComponent->transform = &transform;
+}
+
+/// <summary>
+/// Removes a component from this simObject
+/// </summary>
+/// <param name="componentToRemove"></param>
+void SimObject::removeComponent(Component* componentToRemove) {
+	SimObject::components.erase(std::find(SimObject::components.begin(), SimObject::components.end(), componentToRemove));
+}
+/// <summary>
 /// Updates all the components of this simObject
 /// </summary>
 bool SimObject::updateComponents() {
 
 	// For each component in this simobject's components
-	for (Component component : SimObject::components) {
-		component.Update();
+	for (Component *component : SimObject::components) {
+		component->Update();
 	}
 	return true;
 }
@@ -38,8 +54,8 @@ bool SimObject::updateComponents() {
 bool SimObject::fixedUpdateComponents() {
 
 	// For each component in this simobject's components
-	for (Component component : SimObject::components) {
-		component.FixedUpdate();
+	for (Component *component : SimObject::components) {
+		component->FixedUpdate();
 	}
 	return true;
 }

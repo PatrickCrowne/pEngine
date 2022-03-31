@@ -1,5 +1,5 @@
 #include "Component.h"
-#include "Simulator.h"
+#include "../Simulator.h"
 #include <iostream>
 
 /// <summary>
@@ -15,7 +15,7 @@ void Component::Awake() {
 void Component::Update() {
 
 	float time = Simulator::deltaTime;
-	std::cout << "Frame time: " << time << "ms" << "\n";
+	//std::cout << "Frame time: " << time << "ms" << "\n";
 
 }
 

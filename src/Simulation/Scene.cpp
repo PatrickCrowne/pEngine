@@ -1,12 +1,12 @@
 #include "Scene.h"
 
-bool Scene::registerCamera(Camera cam)
+bool Scene::registerCamera(Camera *cam)
 {
 	sceneCameras.push_back(cam);
 	return true;
 }
 
-bool Scene::registerSimObject(SimObject simObj)
+bool Scene::registerSimObject(SimObject *simObj)
 {
 	sceneObjects.push_back(simObj);
 	return true;
@@ -19,8 +19,8 @@ bool Scene::registerSimObject(SimObject simObj)
 bool Scene::updateScene() {
 
 	// Itrate through scene object array and update all components
-	for (SimObject simObj : Scene::sceneObjects) {
-		simObj.updateComponents();
+	for (SimObject *simObj : Scene::sceneObjects) {
+		simObj->updateComponents();
 	}
 	return true;
 
@@ -29,8 +29,8 @@ bool Scene::updateScene() {
 bool Scene::fixedUpdateScene() {
 
 	// Itrate through scene object array and update all components
-	for (SimObject simObj : Scene::sceneObjects) {
-		simObj.fixedUpdateComponents();
+	for (SimObject *simObj : Scene::sceneObjects) {
+		simObj->fixedUpdateComponents();
 	}
 	return true;
 

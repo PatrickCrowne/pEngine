@@ -1,11 +1,14 @@
 #pragma once
 #include "Component.h"
+#include "../Material.h"
 #include "../../mesh.hpp"
 
 class MeshRenderer : public Component
 {
 public:
-	Mesh mesh;
+	Mesh *mesh;
+	Material *material;
 	void Awake();
+	void Render(glm::mat4);
 };
 
