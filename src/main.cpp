@@ -159,7 +159,6 @@ void mouseMove(int x, int y) {
 	if (glState->isCamRotating()) {
 		// Rotate the camera if currently rotating
 		glState->rotateCamera(glm::vec2(x, y));
-		glutPostRedisplay();	// Request redraw
 	}
 }
 
@@ -168,6 +167,7 @@ void idle() {
 	// TODO: anything that happens every frame (e.g. movement) should be done here
 	// Be sure to call glutPostRedisplay() if the screen needs to update as well
 	Simulator::Update();
+	glutPostRedisplay();
 }
 
 // Called when a menu button is pressed
