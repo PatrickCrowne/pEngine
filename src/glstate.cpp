@@ -3,8 +3,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "util.hpp"
-#include "Shader.h"
-#include "Material.h"
+#include "Simulation/Shader.h"
+#include "Simulation/Material.h"
 #include <iostream>
 
 // Constructor
@@ -49,6 +49,7 @@ void GLState::paintGL() {
 
 	// Set shader to draw with
 	glUseProgram(shader);
+	mat->applyAttributes();
 
 	// Construct a transformation matrix for the camera
 	glm::mat4 xform(1.0f);
@@ -69,7 +70,7 @@ void GLState::paintGL() {
 		scale[3][3] = 1.0f;
 		xform = xform * scale;
 		// Send transform matrix to shader
-		glUniformMatrix4fv(xformLoc, 1, GL_FALSE, glm::value_ptr(xform));
+		glUniformMatrix4fv(mat->shader->uniformInputs.at(mat->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(xform));
 
 		// Use our vertex format and buffers
 		glBindVertexArray(vao);
@@ -87,7 +88,7 @@ void GLState::paintGL() {
 		fixBB = glm::translate(fixBB, -(meshBB.first + meshBB.second) / 2.0f);
 		// Concatenate bounding box transform to view transform and upload to shader
 		xform = xform * fixBB;
-		glUniformMatrix4fv(xformLoc, 1, GL_FALSE, glm::value_ptr(xform));
+		glUniformMatrix4fv(mat->shader->uniformInputs.at(mat->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(xform));
 
 		// Draw the mesh
 		mesh->draw();
@@ -156,12 +157,12 @@ void GLState::showObjFile(const std::string& filename) {
 // Create shaders and associated state
 void GLState::initShaders() {
 
-	Material* material = new Material("shaders/m.mat");
+	mat = new Material("shaders/m.mat");
 	//Shader *testShader = new Shader("shaders/v.glsl", "shaders/f.glsl");
 
 	// Get uniform locations
-	shader = material->shader->compiledShaderId;
-	xformLoc = material->shader->uniformInputs.at(material->modelMatrixAttributeName);
+	shader = mat->shader->compiledShaderId;
+	xformLoc = mat->shader->uniformInputs.at(mat->modelMatrixAttributeName);
 }
 
 // Create geometry buffers and vertex format

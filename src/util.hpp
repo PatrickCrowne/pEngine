@@ -7,7 +7,7 @@
 
 GLuint compileShader(GLenum type, const std::string& filename);
 GLuint linkProgram(std::vector<GLuint>& shaders);
-
+std::string trim(const std::string& s);
 
 
 #endif

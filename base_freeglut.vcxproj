@@ -167,28 +167,28 @@
     <ClCompile Include="src/mesh.cpp" />
     <ClCompile Include="src/util.cpp" />
     <ClCompile Include="src/glstate.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\Component.cpp" />
-    <ClCompile Include="src\Material.cpp" />
-    <ClCompile Include="src\MeshRenderer.cpp" />
-    <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\Shader.cpp" />
-    <ClCompile Include="src\SimObject.cpp" />
-    <ClCompile Include="src\Simulator.cpp" />
+    <ClCompile Include="src\Simulation\Components\Camera.cpp" />
+    <ClCompile Include="src\Simulation\Components\Component.cpp" />
+    <ClCompile Include="src\Simulation\Material.cpp" />
+    <ClCompile Include="src\Simulation\Components\MeshRenderer.cpp" />
+    <ClCompile Include="src\Simulation\Scene.cpp" />
+    <ClCompile Include="src\Simulation\Shader.cpp" />
+    <ClCompile Include="src\Simulation\SimObject.cpp" />
+    <ClCompile Include="src\Simulation\Simulator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/gl_core_3_3.h" />
     <ClInclude Include="src/mesh.hpp" />
     <ClInclude Include="src/util.hpp" />
     <ClInclude Include="src/glstate.hpp" />
-    <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\Component.h" />
-    <ClInclude Include="src\Material.h" />
-    <ClInclude Include="src\MeshRenderer.h" />
-    <ClInclude Include="src\Scene.h" />
-    <ClInclude Include="src\Shader.h" />
-    <ClInclude Include="src\SimObject.h" />
-    <ClInclude Include="src\Simulator.h" />
+    <ClInclude Include="src\Simulation\Components\Camera.h" />
+    <ClInclude Include="src\Simulation\Components\Component.h" />
+    <ClInclude Include="src\Simulation\Material.h" />
+    <ClInclude Include="src\Simulation\Components\MeshRenderer.h" />
+    <ClInclude Include="src\Simulation\Scene.h" />
+    <ClInclude Include="src\Simulation\Shader.h" />
+    <ClInclude Include="src\Simulation\SimObject.h" />
+    <ClInclude Include="src\Simulation\Simulator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders/v.glsl" />

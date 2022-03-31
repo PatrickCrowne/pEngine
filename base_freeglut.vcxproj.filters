@@ -36,28 +36,28 @@
     <ClCompile Include="src/glstate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Camera.cpp">
+    <ClCompile Include="src\Simulation\Components\Camera.cpp">
       <Filter>Source Files\Simulator\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Component.cpp">
+    <ClCompile Include="src\Simulation\Components\Component.cpp">
       <Filter>Source Files\Simulator\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\MeshRenderer.cpp">
+    <ClCompile Include="src\Simulation\Components\MeshRenderer.cpp">
       <Filter>Source Files\Simulator\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene.cpp">
+    <ClCompile Include="src\Simulation\Scene.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
-    <ClCompile Include="src\SimObject.cpp">
+    <ClCompile Include="src\Simulation\SimObject.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
-    <ClCompile Include="src\Simulator.cpp">
+    <ClCompile Include="src\Simulation\Simulator.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
-    <ClCompile Include="src\Material.cpp">
+    <ClCompile Include="src\Simulation\Material.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
-    <ClCompile Include="src\Shader.cpp">
+    <ClCompile Include="src\Simulation\Shader.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,28 +74,28 @@
     <ClInclude Include="src/glstate.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Camera.h">
+    <ClInclude Include="src\Simulation\Components\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Component.h">
+    <ClInclude Include="src\Simulation\Components\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MeshRenderer.h">
+    <ClInclude Include="src\Simulation\Components\MeshRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Scene.h">
+    <ClInclude Include="src\Simulation\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SimObject.h">
+    <ClInclude Include="src\Simulation\SimObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Simulator.h">
+    <ClInclude Include="src\Simulation\Simulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Material.h">
+    <ClInclude Include="src\Simulation\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Shader.h">
+    <ClInclude Include="src\Simulation\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

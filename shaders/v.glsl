@@ -8,6 +8,7 @@ smooth out vec3 fragColor;
 
 uniform mat4 xform;			// Model-to-clip space transform
 uniform vec3 color;
+uniform vec3 colorB;
 
 void main() {
 	// Transform vertex position
@@ -15,5 +16,5 @@ void main() {
 
 	// Interpolate normals
 	fragNorm = norm;
-	fragColor = color;
+	fragColor = mix(color, colorB, dot(norm, vec3(0, 1, 0)));
 }

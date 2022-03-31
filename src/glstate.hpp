@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include "gl_core_3_3.h"
 #include "mesh.hpp"
+#include "Simulation/Material.h"
 
 // Manages OpenGL state, e.g. camera transform, objects, shaders
 class GLState {
@@ -64,6 +65,7 @@ protected:
 	std::unique_ptr<Mesh> mesh;		// Pointer to mesh object
 
 	// OpenGL state
+	Material* mat;		// TEMP
 	GLuint shader;		// GPU shader program
 	GLuint xformLoc;	// Transformation matrix location
 	GLuint vao;			// Vertex array object

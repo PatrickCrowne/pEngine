@@ -2,7 +2,7 @@
 #include <memory>
 #include <filesystem>
 #include <algorithm>
-#include "Simulator.h"
+#include "Simulation/Simulator.h"
 #include "glstate.hpp"
 #include <GL/freeglut.h>
 namespace fs = std::filesystem;

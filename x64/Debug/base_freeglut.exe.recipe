@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\Users\patri\Documents\Purdue\CS334\Final Project\x64\Debug\base_freeglut.exe</FullPath>
+      <FullPath>C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\x64\Debug\base_freeglut.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -7,5 +7,5 @@ out vec3 outCol;	// Final pixel color
 
 void main() {
 	// Visualize normals as colors
-	outCol = normalize(fragNorm) * 0.5f + vec3(0.5f);
+	outCol = fragColor; //normalize(fragNorm) * 0.5f + vec3(0.5f);
 }
