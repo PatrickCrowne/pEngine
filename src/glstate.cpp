@@ -6,9 +6,10 @@
 #include "Simulation/Shader.h"
 #include "Simulation/Material.h"
 #include <iostream>
-#include "Simulation/SimObject.h"
+#include "Simulation/SimObjects/SimObject.h"
 #include "Simulation/Scene.h"
 #include "Simulation/Simulator.h"
+#include "Simulation/AssetReader.h"
 
 // Constructor
 GLState::GLState() :
@@ -42,15 +43,17 @@ void GLState::initializeGL() {
 
 	// TEMP
 	Scene* scene = new Scene();
-	SimObject* simObject = new SimObject();
-	simObject->addComponent(new Component());
-	MeshRenderer* mr = new MeshRenderer();
-	simObject->addComponent(mr);
-	mr->mesh = new Mesh("models/bunny.obj", false);
-	mr->material = new Material("shaders/m.mat");
+
+	SimObject* simObject = new SimObject("simobjects/bunny.simobj");
 	scene->registerSimObject(simObject);
-	Simulator::activeScene = scene;
 	renderers.push_back(simObject->getComponent<MeshRenderer>());
+
+	SimObject* simObject2 = new SimObject("simobjects/testobj.simobj");
+	scene->registerSimObject(simObject2);
+	renderers.push_back(simObject2->getComponent<MeshRenderer>());
+
+	Simulator::activeScene = scene;
+
 	// END TEMP
 
 	// Initialize OpenGL state

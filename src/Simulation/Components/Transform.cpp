@@ -16,6 +16,11 @@ void Transform::SetEuler(float x, float y, float z)
 	rotation = glm::toQuat(rotationMatrix);
 }
 
+void Transform::SetEuler(glm::vec3 eulerAngles)
+{
+	SetEuler(eulerAngles.x, eulerAngles.y, eulerAngles.z);
+}
+
 void Transform::RotateEuler(float x, float y, float z)
 {
 	glm::mat4 rotationMatrix = glm::toMat4(rotation);

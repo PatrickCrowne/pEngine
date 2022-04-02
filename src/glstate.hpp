@@ -6,7 +6,7 @@
 #include <memory>
 #include <glm/glm.hpp>
 #include "gl_core_3_3.h"
-#include "mesh.hpp"
+#include "Simulation/mesh.hpp"
 #include "Simulation/Material.h"
 #include "Simulation/Components/MeshRenderer.h"
 

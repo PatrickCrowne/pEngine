@@ -7,7 +7,8 @@
 
 namespace Simulator {
 
-	extern float deltaTime;
+	extern double deltaTime;
+	extern double time;
 	extern int framesPerSecond;
 	extern Scene *activeScene;
 	void CalculateFrameTime();

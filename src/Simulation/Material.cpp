@@ -4,6 +4,7 @@
 #include <filesystem>
 #include "../util.hpp"
 #include <glm/gtc/type_ptr.hpp>
+#include "AssetReader.h"
 
 // Creates a new material from the configuration file
 Material::Material(std::string materialConfigFile) {
@@ -19,18 +20,17 @@ Material::Material(std::string materialConfigFile) {
 
 		// Material Name
 		if (buffer._Starts_with(MAT_MATERIAL_NAME)) {
-			name = getBetweenQuotes(buffer);
-			std::cout << name << "\n";
+			name = AssetReader::getBetweenCharacters(buffer, "\"");
 			continue;
 		}
 		// Vertex Shader
 		if (buffer._Starts_with(MAT_VERTEX_SHADER)) {
-			vertexShaderFile = getBetweenQuotes(buffer);
+			vertexShaderFile = AssetReader::getBetweenCharacters(buffer, "\"");
 			continue;
 		}
 		// Fragment Shader
 		if (buffer._Starts_with(MAT_FRAGMENT_SHADER)) {
-			fragmentShaderFile = getBetweenQuotes(buffer);
+			fragmentShaderFile = AssetReader::getBetweenCharacters(buffer, "\"");
 			continue;
 		}
 
@@ -51,37 +51,19 @@ Material::Material(std::string materialConfigFile) {
 
 				// Integer
 				if (propertyValue._Starts_with(MAT_PROP_INTEGER)) {
-					propertyValue = propertyValue.substr(4, propertyValue.length() - 5);
-					int value = stoi(trim(propertyValue));
-					// Register the integer
+					int value = AssetReader::getInteger(propertyValue);
 					registerAttribute(propertyName, SHADER_INPUT_TYPE_1I, (void*)&value);
 				}
 
 				// Float
 				if (propertyValue._Starts_with(MAT_PROP_FLOAT)) {
-					propertyValue = propertyValue.substr(6, propertyValue.length() - 7);
-					float value = stof(trim(propertyValue));
-					// Register the float
+					float value = AssetReader::getFloat(propertyValue);
 					registerAttribute(propertyName, SHADER_INPUT_TYPE_1F, (void*) &value);
 				}
 
 				// Vector
 				if (propertyValue._Starts_with(MAT_PROP_VECTOR3)) {
-					propertyValue = propertyValue.substr(5, propertyValue.length() - 6);
-					size_t pos = propertyValue.find(",");
-
-					float x = stof(trim(propertyValue.substr(0, pos)));
-					propertyValue = propertyValue.substr(pos + 1, propertyValue.length() - pos);
-					pos = propertyValue.find(",");
-
-					float y = stof(trim(propertyValue.substr(0, pos)));
-					propertyValue = propertyValue.substr(pos + 1, propertyValue.length() - pos);
-					pos = propertyValue.find(",");
-
-					float z = stof(trim(propertyValue.substr(0, pos)));
-
-					// Register the vec3
-					registerAttribute(propertyName, SHADER_INPUT_TYPE_3FV, (void*) &glm::vec3(x, y, z));
+					registerAttribute(propertyName, SHADER_INPUT_TYPE_3FV, (void*)&AssetReader::getVector(propertyValue));
 				}
 			}
 			
@@ -94,6 +76,7 @@ Material::Material(std::string materialConfigFile) {
 
 	if (vertexShaderFile.empty() || fragmentShaderFile.empty()) {
 		std::cout << "Error loading material from file " << materialConfigFile << "!\n";
+		shader = nullptr;
 	}
 	else {
 		// Create the shader
@@ -101,16 +84,6 @@ Material::Material(std::string materialConfigFile) {
 	}
 	
 
-}
-
-/// <summary>
-/// Returns the information between the quotes in the given line
-/// </summary>
-/// <param name="line"></param>
-/// <returns></returns>
-std::string Material::getBetweenQuotes(std::string line) {
-	int firstIndex = line.find("\"") + 1; // Stores the index of the first quotation mark
-	return line.substr(firstIndex, line.find_last_of("\"") - firstIndex);
 }
 
 
@@ -130,7 +103,6 @@ void Material::getPropertyNameAndValue(std::string line , std::string *name_ref,
 	// Sanitize
 	*name_ref = (*name_ref).substr((*name_ref).find_first_not_of(" "), (*name_ref).find_last_of(" "));
 	*value_ref = (*value_ref).substr((*value_ref).find_first_not_of(" "), (*value_ref).length());
-	std::cout << (*name_ref) << " -> " << (*value_ref) << " \n";
 
 }
 
@@ -175,6 +147,7 @@ int Material::getAttributeValue(std::string in, void* out) {
 		out = &matrixAttributes.at(in);
 		return SHADER_INPUT_TYPE_4FV;
 	}
+	return SHADER_INPUT_TYPE_1F;
 
 }
 

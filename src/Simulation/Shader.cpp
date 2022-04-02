@@ -57,7 +57,6 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 			if (pos != std::string::npos) {
 				buffer = buffer.substr(0, pos);
 			}
-			std::cout << " -- uniform input: " << buffer << "\n";
 			// Add the uniform input to the map
 			uniformInputs.emplace(buffer, glGetUniformLocation(compiledShaderId, buffer.c_str()));
 			uniformInputType.emplace(buffer, dataType);

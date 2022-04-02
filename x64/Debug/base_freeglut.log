@@ -1,4 +1,10 @@
-﻿  MeshRenderer.cpp
-  Transform.cpp
+﻿  glstate.cpp
+  main.cpp
+  Component.cpp
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Component.cpp(17,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  MeshRenderer.cpp
+  Simulator.cpp
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Simulator.cpp(22,36): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  mesh.cpp
   Generating Code...
   base_freeglut.vcxproj -> C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\x64\Debug\base_freeglut.exe

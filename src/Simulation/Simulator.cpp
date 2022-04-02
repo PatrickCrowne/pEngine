@@ -5,7 +5,8 @@
 
 using namespace Simulator;
 
-float Simulator::deltaTime;
+double Simulator::deltaTime;
+double Simulator::time;
 int Simulator::framesPerSecond;
 Scene *Simulator::activeScene;
 TimePoint frameStartTime;
@@ -28,5 +29,7 @@ void Simulator::CalculateFrameTime() {
 void Simulator::Update() {
 	// Calculate frame timing
 	CalculateFrameTime();
+	time += deltaTime;
+	std::cout << time << "\n";
 	Simulator::activeScene->updateScene();
 }

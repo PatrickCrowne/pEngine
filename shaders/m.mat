@@ -1,8 +1,0 @@
-MATERIAL_NAME = "Default Material"
-VERTEX_SHADER = "shaders/v.glsl"
-FRAGMENT_SHADER = "shaders/f.glsl"
-PROPERTY xform = MODEL_MATRIX
-PROPERTY color = vec3(1, 0.23, 0)
-PROPERTY colorB = vec3(1, 0, 1)
-PROPERTY a = int(5)
-PROPERTY b = float(10.23)

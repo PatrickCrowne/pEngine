@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "Components/Camera.h"
-#include "SimObject.h"
+#include "SimObjects/SimObject.h"
 class Scene
 {
 public:

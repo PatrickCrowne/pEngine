@@ -27,7 +27,7 @@
     <ClCompile Include="src/main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src/mesh.cpp">
+    <ClCompile Include="src\Simulation\mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src/util.cpp">
@@ -48,7 +48,7 @@
     <ClCompile Include="src\Simulation\Scene.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
-    <ClCompile Include="src\Simulation\SimObject.cpp">
+    <ClCompile Include="src\Simulation\SimObjects\SimObject.cpp">
       <Filter>Source Files\Simulator</Filter>
     </ClCompile>
     <ClCompile Include="src\Simulation\Simulator.cpp">
@@ -63,12 +63,27 @@
     <ClCompile Include="src\Simulation\Components\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Simulation\AssetReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Simulation\ComponentRegistry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Simulation\SimObjects\Coaster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Simulation\Components\Coasters\TrackSpline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Simulation\SimObjects\TrackMeshSegment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/gl_core_3_3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src/mesh.hpp">
+    <ClInclude Include="src\Simulation\mesh.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src/util.hpp">
@@ -89,7 +104,7 @@
     <ClInclude Include="src\Simulation\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Simulation\SimObject.h">
+    <ClInclude Include="src\Simulation\SimObjects\SimObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Simulation\Simulator.h">
@@ -104,6 +119,21 @@
     <ClInclude Include="src\Simulation\Components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Simulation\AssetReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\ComponentRegistry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\SimObjects\Coaster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\Components\Coasters\TrackSpline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\SimObjects\TrackMeshSegment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders/f.glsl">
@@ -112,6 +142,8 @@
     <None Include="shaders/v.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\m.mat" />
+    <None Include="materials\m.mat" />
+    <None Include="simobjects\testobj.simobj" />
+    <None Include="simobjects\bunny.simobj" />
   </ItemGroup>
 </Project>
