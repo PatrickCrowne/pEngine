@@ -63,8 +63,20 @@ Material::Material(std::string materialConfigFile) {
 
 				// Vector
 				if (propertyValue._Starts_with(MAT_PROP_VECTOR3)) {
-					registerAttribute(propertyName, SHADER_INPUT_TYPE_3FV, (void*)&AssetReader::getVector(propertyValue));
+					glm::vec3 value = AssetReader::getVector(propertyValue);
+					registerAttribute(propertyName, SHADER_INPUT_TYPE_3FV, (void*)&value);
 				}
+
+				// Texture2D
+				if (propertyValue._Starts_with(MAT_PROP_TEXTURE2D)) {
+
+					Texture *texture = new Texture(AssetReader::getTexture(propertyValue));
+					int value = textures.size();
+					registerAttribute(propertyName, SHADER_INPUT_TYPE_SAMPLER2D_1I, (void*)&value);
+					textures.push_back(texture);
+
+				}
+
 			}
 			
 
@@ -119,6 +131,7 @@ bool Material::registerAttribute(std::string name, int type, void* value) {
 	if (type == SHADER_INPUT_TYPE_3FV) vectorAttributes.emplace(name, *((glm::vec3*)value));
 	if (type == SHADER_INPUT_TYPE_4FV) matrixAttributes.emplace(name, *((glm::mat4*)value));
 	if (type == SHADER_INPUT_TYPE_1I) integerAttributes.emplace(name, *((int*)value));
+	if (type == SHADER_INPUT_TYPE_SAMPLER2D_1I) integerAttributes.emplace(name, *((int*)value));
 	return true;
 
 }
@@ -182,6 +195,12 @@ void Material::applyAttributes() {
 	for (mat4AttributeIterator = matrixAttributes.begin(); mat4AttributeIterator != matrixAttributes.end(); mat4AttributeIterator++)
 	{
 		glUniformMatrix4fv(shader->uniformInputs.at(mat4AttributeIterator->first), 1, GL_FALSE, glm::value_ptr(mat4AttributeIterator->second));
+	}
+
+	int index = 0;
+	for (Texture *t : textures) {
+		t->activeTexture(index);
+		index++;
 	}
 
 }

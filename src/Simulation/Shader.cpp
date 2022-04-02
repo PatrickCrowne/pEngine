@@ -5,10 +5,6 @@
 #include <fstream>
 #include <string>
 
-Shader::Shader() {
-	// Empty constructor
-}
-
 /// <summary>
 /// Constructs a new shader
 /// </summary>
@@ -65,6 +61,43 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 
 	vertexFileSteam.close();
 
+
+	// Get uniform identifers
+	std::ifstream fragmentFileStream;
+	fragmentFileStream.open(fragmentFile);
+	// Read all the uniform identifers from the file
+	while (getline(fragmentFileStream, buffer)) {
+		if (buffer._Starts_with("uniform")) {
+			size_t pos;
+			// Get rid of any comments that may be on this line
+			pos = buffer.find("//");
+			if (pos != std::string::npos) {
+				buffer = buffer.substr(0, pos);
+			}
+			// Get the uniform identifier
+			// Skip to the space after 'uniform'
+			pos = buffer.find(' ');
+			buffer = buffer.substr(pos + 1, buffer.length());
+			// Skip to the space after the type
+			pos = buffer.find(' ');
+			// Get the datatype
+			std::string dataString = buffer.substr(0, pos);
+			// Determine data type
+			int dataType = determineDatatype(dataString);
+			buffer = buffer.substr(pos + 1, buffer.length());
+			// Sanitize the end
+			pos = buffer.find(';');
+			if (pos != std::string::npos) {
+				buffer = buffer.substr(0, pos);
+			}
+			// Add the uniform input to the map
+			uniformInputs.emplace(buffer, glGetUniformLocation(compiledShaderId, buffer.c_str()));
+			uniformInputType.emplace(buffer, dataType);
+		}
+	}
+
+	fragmentFileStream.close();
+
 }
 
 /// <summary>
@@ -92,6 +125,10 @@ int Shader::determineDatatype(std::string dataString) {
 
 	if (dataString._Equal("int")) {
 		return SHADER_INPUT_TYPE_1I;
+	}
+
+	if (dataString._Equal("sampler2D")) {
+		return SHADER_INPUT_TYPE_SAMPLER2D_1I;
 	}
 
 	return SHADER_INPUT_TYPE_1F;

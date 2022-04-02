@@ -181,6 +181,8 @@
     <ClCompile Include="src\Simulation\Simulator.cpp" />
     <ClCompile Include="src\Simulation\Components\Transform.cpp" />
     <ClCompile Include="src\Simulation\SimObjects\TrackMeshSegment.cpp" />
+    <ClCompile Include="src\Simulation\Texture.cpp" />
+    <ClCompile Include="src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Simulation\Components\Coasters\TrackSpline.h" />
@@ -201,8 +203,11 @@
     <ClInclude Include="src\Simulation\Simulator.h" />
     <ClInclude Include="src\Simulation\Components\Transform.h" />
     <ClInclude Include="src\Simulation\SimObjects\TrackMeshSegment.h" />
+    <ClInclude Include="src\Simulation\Texture.h" />
+    <ClInclude Include="src\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="materials\bunny.mat" />
     <None Include="shaders/v.glsl" />
     <None Include="shaders/f.glsl" />
     <None Include="materials\m.mat" />

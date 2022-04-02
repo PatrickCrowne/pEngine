@@ -1,8 +1,10 @@
 #pragma once
 #include <map>
 #include <string>
+#include <vector>
 #include "Shader.h"
 #include <glm/glm.hpp>
+#include "Texture.h"
 
 #define MAT_MATERIAL_NAME "MATERIAL_NAME"
 #define MAT_VERTEX_SHADER "VERTEX_SHADER"
@@ -13,6 +15,7 @@
 #define MAT_PROP_VECTOR3 "vec3"
 #define MAT_PROP_INTEGER "int"
 #define MAT_PROP_FLOAT "float"
+#define MAT_PROP_TEXTURE2D "tex"
 
 class Material
 {
@@ -25,9 +28,8 @@ public:
 	void applyAttributes();
 	Shader *shader;
 private:
-	std::string getBetweenQuotes(std::string);
 	void getPropertyNameAndValue(std::string, std::string*, std::string *);
-	
+	std::vector<Texture*> textures;
 	// Attributes
 	std::map <std::string, int> integerAttributes;
 	std::map <std::string, float> floatAttributes;

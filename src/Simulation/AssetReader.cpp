@@ -29,6 +29,10 @@ std::string AssetReader::getString(std::string line) {
 	return getBetweenCharacters(line, "\"");
 }
 
+std::string AssetReader::getTexture(std::string line) {
+	return getBetweenCharacters(line, "(", ")");
+}
+
 glm::vec3 AssetReader::getVector(std::string line) {
 	std::string interior = getBetweenCharacters(line, "(", ")");
 

@@ -78,6 +78,12 @@
     <ClCompile Include="src\Simulation\SimObjects\TrackMeshSegment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Simulation\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stb_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/gl_core_3_3.h">
@@ -134,6 +140,12 @@
     <ClInclude Include="src\Simulation\SimObjects\TrackMeshSegment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Simulation\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders/f.glsl">
@@ -145,5 +157,6 @@
     <None Include="materials\m.mat" />
     <None Include="simobjects\testobj.simobj" />
     <None Include="simobjects\bunny.simobj" />
+    <None Include="materials\bunny.mat" />
   </ItemGroup>
 </Project>

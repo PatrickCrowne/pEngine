@@ -15,6 +15,7 @@ namespace AssetReader {
 	float getFloat(std::string);
 	int getInteger(std::string);
 	std::string getString(std::string);
+	std::string getTexture(std::string);
 	glm::vec3 getVector(std::string);
 
 }
