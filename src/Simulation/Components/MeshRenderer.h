@@ -6,6 +6,8 @@
 class MeshRenderer : public Component
 {
 public:
+	MeshRenderer();
+	~MeshRenderer();
 	Mesh *mesh;
 	Material *material;
 	void Awake();

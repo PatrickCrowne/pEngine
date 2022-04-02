@@ -68,6 +68,14 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 }
 
 /// <summary>
+/// Destroys this shader
+/// </summary>
+Shader::~Shader()
+{
+	glDeleteProgram(compiledShaderId);
+}
+
+/// <summary>
 /// Determines the data type for the given string input
 /// </summary>
 /// <param name="">The string input of the datatype "vec"</param>

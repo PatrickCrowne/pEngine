@@ -13,6 +13,7 @@ class Shader
 public:
 	Shader();
 	Shader(std::string vertexFile, std::string fragmentFile);
+	~Shader();
 	GLuint compiledShaderId;
 	std::map<std::string, GLuint> uniformInputs;
 	std::map<std::string, int> uniformInputType;

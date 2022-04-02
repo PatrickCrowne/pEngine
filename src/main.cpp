@@ -8,9 +8,7 @@
 namespace fs = std::filesystem;
 
 // Menu identifiers
-const int OBJMENU_TETRAHEDRON = 64;			// Select tetrahedron to view
 const int MENU_EXIT = 1;					// Exit application
-std::vector<std::string> meshFilenames;		// Paths to .obj files to load
 
 // OpenGL state
 std::unique_ptr<GLState> glState;
@@ -56,16 +54,14 @@ int main(int argc, char** argv) {
 // Setup window and callbacks
 void initGLUT(int* argc, char** argv) {
 	// Set window and context settings
-	int width = 800; int height = 600;
+	int width = 1280; int height = 720;
 	glutInit(argc, argv);
 	glutInitWindowSize(width, height);
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	// Create the window
-	glutCreateWindow("FreeGLUT Window");
-
-	// Create a menu
+	glutCreateWindow("pEngine");
 
 	// GLUT callbacks
 	glutDisplayFunc(display);
@@ -78,30 +74,12 @@ void initGLUT(int* argc, char** argv) {
 }
 
 void initMenu() {
-	// Create a submenu with all the objects you can view
-	findObjFiles();
-	int objmenu = glutCreateMenu(menu);
-	glutAddMenuEntry("Tetrahedron", OBJMENU_TETRAHEDRON);	// Built-in
-	for (int i = 0; i < meshFilenames.size(); i++) {
-		glutAddMenuEntry(meshFilenames[i].c_str(), OBJMENU_TETRAHEDRON + i + 1);
-	}
 
 	// Create the main menu, adding the objects menu as a submenu
 	glutCreateMenu(menu);
-	glutAddSubMenu("View object", objmenu);
 	glutAddMenuEntry("Exit", MENU_EXIT);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
-}
-
-void findObjFiles() {
-	// Search the models/ directory for any file ending in .obj
-	fs::path modelsDir = "models";
-	for (auto& di : fs::directory_iterator(modelsDir)) {
-		if (di.is_regular_file() && di.path().extension() == ".obj")
-			meshFilenames.push_back(di.path().string());
-	}
-	std::sort(meshFilenames.begin(), meshFilenames.end());
 }
 
 // Called whenever a screen redraw is requested
@@ -162,10 +140,8 @@ void mouseMove(int x, int y) {
 	}
 }
 
-// Called when there are no events to process
+// Called when there are no events to process (i.e. every frame)
 void idle() {
-	// TODO: anything that happens every frame (e.g. movement) should be done here
-	// Be sure to call glutPostRedisplay() if the screen needs to update as well
 	Simulator::Update();
 	glutPostRedisplay();
 }
@@ -177,24 +153,7 @@ void menu(int cmd) {
 	case MENU_EXIT:
 		glutLeaveMainLoop();
 		break;
-
-	// Show the tetrahedron
-	case OBJMENU_TETRAHEDRON:
-		glState->showTetrahedron();
-		glutPostRedisplay();	// Request redraw
-		break;
-
 	default:
-		// Show the other objects
-		if (cmd > OBJMENU_TETRAHEDRON) {
-			try {
-				glState->showObjFile(meshFilenames[cmd - OBJMENU_TETRAHEDRON - 1]);
-				glutPostRedisplay();	// Request redraw
-			// Might fail to load object
-			} catch (const std::exception& e) {
-				std::cerr << e.what() << std::endl;
-			}
-		}
 		break;
 	}
 }

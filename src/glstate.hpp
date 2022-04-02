@@ -33,12 +33,9 @@ public:
 	void rotateCamera(glm::vec2 mousePos);
 	void offsetCamera(float offset);
 
-	// Set object to display
-	void showTetrahedron();
-	void showObjFile(const std::string& filename);
-
 	// Object Registration
-	void registerRenderer(MeshRenderer*);
+	static void registerRenderer(MeshRenderer*);
+	static void unregisterRenderer(MeshRenderer*);
 
 	// Per-vertex attributes
 	struct Vertex {
@@ -47,9 +44,6 @@ public:
 	};
 
 protected:
-	// Initialization
-	void initShaders();
-	void initGeometry();
 
 	// Camera state
 	int width, height;		// Width and height of the window
@@ -59,25 +53,8 @@ protected:
 	glm::vec2 initCamRot;	// Initial camera rotation on click
 	glm::vec2 initMousePos;	// Initial mouse position on click
 
-	// Object state
-	enum ObjMode {
-		OBJMODE_TETRAHEDRON,		// Show the built-in tetrahedron
-		OBJMODE_MESH,				// Show a given obj file
-	};
-	ObjMode objMode;				// Which object state are we in
-	std::string meshFilename;		// Name of the obj file being shown
-	std::unique_ptr<Mesh> mesh;		// Pointer to mesh object
-	
-	std::vector<MeshRenderer*> renderers;
+	static std::vector<MeshRenderer*> renderers; // List of renderers for this scene
 
-	// OpenGL state
-	Material* mat;		// TEMP
-	GLuint shader;		// GPU shader program
-	GLuint xformLoc;	// Transformation matrix location
-	GLuint vao;			// Vertex array object
-	GLuint vbuf;		// Vertex buffer
-	GLuint ibuf;		// Index buffer
-	GLsizei vcount;		// Number of indices to draw
 };
 
 #endif
