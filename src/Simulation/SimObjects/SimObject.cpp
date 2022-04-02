@@ -63,7 +63,7 @@ SimObject::SimObject(std::string simObjectConfigFile) {
 					}
 
 					if (buffer._Starts_with("\tMATERIAL")) {
-						meshRenderer->material = new Material(AssetReader::getString(buffer));
+						meshRenderer->material = Material::getMaterial(AssetReader::getString(buffer));
 					}
 
 					getline(simObjectConfigFileStream, buffer);

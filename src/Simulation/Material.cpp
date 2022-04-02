@@ -6,6 +6,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "AssetReader.h"
 
+std::map<std::string, Material*> Material::materials;
+
 // Creates a new material from the configuration file
 Material::Material(std::string materialConfigFile) {
 
@@ -203,4 +205,12 @@ void Material::applyAttributes() {
 		index++;
 	}
 
+}
+
+Material *Material::getMaterial(std::string path)
+{
+	if (materials.count(path) > 0) {
+		return materials.at(path);
+	}
+	return new Material(path);
 }

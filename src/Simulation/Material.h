@@ -27,6 +27,7 @@ public:
 	int getAttributeValue(std::string in, void* out);
 	void applyAttributes();
 	Shader *shader;
+	static Material *getMaterial(std::string);
 private:
 	void getPropertyNameAndValue(std::string, std::string*, std::string *);
 	std::vector<Texture*> textures;
@@ -35,6 +36,8 @@ private:
 	std::map <std::string, float> floatAttributes;
 	std::map <std::string, glm::vec3> vectorAttributes;
 	std::map <std::string, glm::mat4> matrixAttributes;
+	int materialId;
+	static std::map<std::string, Material*> materials;
 
 };
 
