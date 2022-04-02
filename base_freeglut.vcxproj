@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Simulation\CSV.cpp" />
     <ClCompile Include="src\Simulation\Components\Coasters\TrackSpline.cpp" />
     <ClCompile Include="src\Simulation\SimObjects\Coaster.cpp" />
     <ClCompile Include="src\Simulation\ComponentRegistry.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Simulation\CSV.h" />
     <ClInclude Include="src\Simulation\Components\Coasters\TrackSpline.h" />
     <ClInclude Include="src\Simulation\SimObjects\Coaster.h" />
     <ClInclude Include="src\Simulation\ComponentRegistry.h" />

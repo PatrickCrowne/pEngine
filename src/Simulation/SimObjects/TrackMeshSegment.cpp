@@ -4,11 +4,16 @@
 /// <summary>
 /// Initializes this track mesh segment
 /// </summary>
-TrackMeshSegment::TrackMeshSegment()
+TrackMeshSegment::TrackMeshSegment(int i)
 {
+
+	index = i;
+	length = 0;
 	// Create the mesh renderer so the track can be rendered
 	trackMeshRenderer = new MeshRenderer();
-	addComponent(trackMeshRenderer);
+	trackMeshRenderer->mesh = new Mesh("models/cube.obj");
+	trackMeshRenderer->material = Material::getMaterial("materials/bunny.mat");
+	addComponent(this->trackMeshRenderer);
 
 }
 

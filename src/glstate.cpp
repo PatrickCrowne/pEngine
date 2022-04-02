@@ -10,6 +10,7 @@
 #include "Simulation/Scene.h"
 #include "Simulation/Simulator.h"
 #include "Simulation/AssetReader.h"
+#include "Simulation/Components/Coasters/TrackSpline.h"
 
 std::vector<MeshRenderer*> GLState::renderers;
 
@@ -45,6 +46,8 @@ void GLState::initializeGL() {
 	SimObject* simObject2 = new SimObject("simobjects/testobj.simobj");
 	scene->registerSimObject(simObject2);
 
+	TrackSpline* trackSpline = new TrackSpline();
+
 	Simulator::activeScene = scene;
 
 	// END TEMP
@@ -76,7 +79,7 @@ void GLState::paintGL() {
 	glm::mat4 xform(1.0f);
 	// Perspective projection
 	float aspect = (float)width / (float)height;
-	glm::mat4 proj = glm::perspective(glm::radians(fovy), aspect, 0.1f, 100.0f);
+	glm::mat4 proj = glm::perspective(glm::radians(fovy), aspect, 0.1f, 5000.0f);
 	// Camera viewpoint
 	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -camCoords.z));
 	view = glm::rotate(view, glm::radians(camCoords.y), glm::vec3(1.0f, 0.0f, 0.0f));

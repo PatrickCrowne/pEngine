@@ -134,6 +134,12 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 			vertices[i + 1].norm = glm::normalize(accumulated_normals[v_elements[i + 1]]);
 			vertices[i + 2].norm = glm::normalize(accumulated_normals[v_elements[i + 2]]);
 		}
+
+		// Check for uvs
+		vertices[i + 0].uv = glm::vec2(raw_vertices[v_elements[i + 0]].x, raw_vertices[v_elements[i + 0]].z);
+		vertices[i + 1].uv = glm::vec2(raw_vertices[v_elements[i + 1]].x, raw_vertices[v_elements[i + 1]].z);
+		vertices[i + 2].uv = glm::vec2(raw_vertices[v_elements[i + 2]].x, raw_vertices[v_elements[i + 2]].z);
+
 	}
 	vcount = (GLsizei)vertices.size();
 
@@ -145,10 +151,15 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 	glBindBuffer(GL_ARRAY_BUFFER, vbuf);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 
+	// Vertices
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+	// Normals
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(glm::vec3));
+	// UVs
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(2 * sizeof(glm::vec3)));
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -215,6 +226,11 @@ void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_
 		vertices[i + 1].norm = glm::normalize(accumulated_normals[v_elements[i + 1]]);
 		vertices[i + 2].norm = glm::normalize(accumulated_normals[v_elements[i + 2]]);
 
+		// Calculate uvs
+		vertices[i + 0].uv = glm::vec2(raw_vertices[v_elements[i + 0]].x, raw_vertices[v_elements[i + 0]].z);
+		vertices[i + 1].uv = glm::vec2(raw_vertices[v_elements[i + 1]].x, raw_vertices[v_elements[i + 1]].z);
+		vertices[i + 2].uv = glm::vec2(raw_vertices[v_elements[i + 2]].x, raw_vertices[v_elements[i + 2]].z);
+
 	}
 	vcount = (GLsizei)vertices.size();
 
@@ -228,10 +244,15 @@ void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_
 	glBindBuffer(GL_ARRAY_BUFFER, vbuf);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), vertices.data(), GL_STATIC_DRAW);
 
+	// Vertices
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+	// Normals
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(glm::vec3));
+	// UVs
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(2 * sizeof(glm::vec3)));
 
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

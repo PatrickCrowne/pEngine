@@ -2,19 +2,30 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "../../SimObjects/SimObject.h"
+#include "../../SimObjects/TrackMeshSegment.h"
+
+#define SPLINE_STEP_SIZE 0.05f
+#define SPLINE_SAMPLE_COUNT 100
+#define SPLINE_ITERATION_COUNT 5
+#define SPLINE_RAIL_RESOLUTION 12
 
 class TrackSpline
 {
 
 public:
+	TrackSpline();
+	~TrackSpline() {}
 	bool addNode(glm::vec3);
 	bool removeNode(int);
 	bool buildTrackMesh();
 
 private:
 	bool buildTrackMeshSection(int index);
+	TrackMeshSegment *getTrackMeshSegment(int);
+	glm::vec3 bSpline(float t, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 	std::vector<glm::vec3> nodes;
-	std::vector<SimObject*> trackModels;
+	std::map<int, TrackMeshSegment*> trackSegments;
+	std::vector<glm::vec3> bakedSpline;
 
 };
 

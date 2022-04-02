@@ -30,5 +30,6 @@ void Simulator::Update() {
 	// Calculate frame timing
 	CalculateFrameTime();
 	time += deltaTime;
+	std::cout << (1.0f / deltaTime) << " fps\n";
 	Simulator::activeScene->updateScene();
 }

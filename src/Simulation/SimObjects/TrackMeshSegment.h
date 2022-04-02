@@ -6,8 +6,10 @@ class TrackMeshSegment : public SimObject
 {
 
 public:
-	TrackMeshSegment();
+	TrackMeshSegment(int i);
 	Mesh* getMesh();
+	float length;
+	int index;
 protected:
 	MeshRenderer *trackMeshRenderer;
 
