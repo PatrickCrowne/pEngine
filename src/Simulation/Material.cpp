@@ -15,6 +15,7 @@ Material::Material(std::string materialConfigFile) {
 	materailConfigFileStream.open(materialConfigFile);
 
 	std::string buffer;
+	std::string shaderName;
 	std::string vertexShaderFile;
 	std::string fragmentShaderFile;
 	// Read all the lines of the material configuration file

@@ -1,6 +1,8 @@
 #include "TrackSpline.h"
 #include "../../CSV.h"
 
+#define PI 3.14159265f
+
 TrackSpline::TrackSpline() {
 
     CSV* csv = new CSV("tracks/test.csv");
@@ -59,6 +61,65 @@ TrackMeshSegment* TrackSpline::getTrackMeshSegment(int index) {
         return trackSegments.at(index);
     }
     return new TrackMeshSegment(index);
+
+}
+
+void TrackSpline::generateRailVertices(glm::vec3 offset, float radius, std::vector<glm::vec3> *vertices, std::vector<int> *triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3) {
+
+    const int railSegmentCount = (int)(length * 10);
+
+    glm::vec3 curPos;
+    glm::vec3 lastPos;
+
+    for (int i = 0; i <= railSegmentCount; i++) {
+
+        curPos = bSpline((float)i / (float)railSegmentCount, p0, p1, p2, p3);
+        lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.1f, p0, p1, p2, p3);
+
+        // TODO: Add rolling
+        glm::vec3 forward = glm::normalize(lastPos - curPos);
+        glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0, 1, 0)));
+        glm::vec3 up = -glm::normalize(glm::cross(forward, right));
+        glm::vec3 position = curPos;
+        int vertexCount = vertices->size();
+
+        // Create a ring 
+        for (int j = 0; j < SPLINE_RAIL_RESOLUTION; j++) {
+
+            float theta = (((float)j / (float)SPLINE_RAIL_RESOLUTION) * 2.0f * PI) + (offset.z);
+            glm::vec3 newPos = glm::vec3(sin(theta) * radius + offset.x, cos(theta) * radius + offset.y, 0);
+
+            // Write vertex data to arrays
+            vertices->push_back(position + (newPos.x * right) + (newPos.y * up) + (newPos.z * forward));
+            uvs->push_back(glm::vec2((float)j / (float)(SPLINE_RAIL_RESOLUTION + 1), (float)i / (float)railSegmentCount));
+
+            // Add faces
+            if (i > 0) {
+
+                if (j < SPLINE_RAIL_RESOLUTION - 1) {
+                    triangles->push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
+                    triangles->push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j + 1);
+                    triangles->push_back(vertexCount + j + 1);
+                    triangles->push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
+                    triangles->push_back(vertexCount + j + 1);
+                    triangles->push_back(vertexCount + j);
+                }
+                else {
+                    triangles->push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
+                    triangles->push_back(vertexCount - SPLINE_RAIL_RESOLUTION);
+                    triangles->push_back(vertexCount);
+                    triangles->push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
+                    triangles->push_back(vertexCount);
+                    triangles->push_back(vertexCount + j);
+                }
+
+            }
+
+        }
+
+
+
+    }
 
 }
 
@@ -132,102 +193,12 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     // Create vectors to store mesh data
     std::vector<glm::vec3> vertices;
     std::vector<int> triangles;
-    glm::mat4 orientation;
-    glm::vec3 position;
-    float theta;
-    const int railSegmentCount = (int) (length * 10);
-
-    // Left Rail
-    for (int i = 0; i <= railSegmentCount; i++) {
-
-        curPos = bSpline((float)i / (float)railSegmentCount, p0, p1, p2, p3);
-        lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.01f, p0, p1, p2, p3);
-
-        // TODO: Add rolling
-        orientation = glm::lookAt(glm::vec3(), lastPos - curPos, glm::vec3(0, 1, 0));
-        position = curPos;
-        int vertexCount = vertices.size();
-        // Create a ring 
-        for (int j = 0; j < SPLINE_RAIL_RESOLUTION; j++) {
-
-            theta = ((float)j / (float) SPLINE_RAIL_RESOLUTION) * 2.0f * 3.1415926f;
-            glm::vec4 newPos = (orientation * glm::vec4(sin(theta) * 0.075f - 0.5f, cos(theta) * 0.075f, 0, 1));
-            vertices.push_back(position + glm::vec3(newPos.x, newPos.y, newPos.z));
-
-            // Add faces
-            if (i > 0) {
-
-                if (j < SPLINE_RAIL_RESOLUTION - 1) {
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j + 1);
-                    triangles.push_back(vertexCount + j + 1);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount + j + 1);
-                    triangles.push_back(vertexCount + j);
-                }
-                else {
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION);
-                    triangles.push_back(vertexCount);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount);
-                    triangles.push_back(vertexCount + j);
-                }
-
-            }
-
-        }
-
-        
-
-    }
-
-    // Right Rail
-    for (int i = 0; i <= railSegmentCount; i++) {
-
-        curPos = bSpline((float)i / (float)railSegmentCount, p0, p1, p2, p3);
-        lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.01f, p0, p1, p2, p3);
-
-        // TODO: Add rolling
-        orientation = glm::lookAt(glm::vec3(), lastPos - curPos, glm::vec3(0, 1, 0));
-        position = curPos;
-        int vertexCount = vertices.size();
-        // Create a ring 
-        for (int j = 0; j < SPLINE_RAIL_RESOLUTION; j++) {
-
-            theta = ((float)j / (float)SPLINE_RAIL_RESOLUTION) * 2.0f * 3.1415926f;
-            glm::vec4 newPos = (orientation * glm::vec4(sin(theta) * 0.075f + 0.5f, cos(theta) * 0.075f, 0, 1));
-            vertices.push_back(position + glm::vec3(newPos.x, newPos.y, newPos.z));
-
-            // Add faces
-            if (i > 0) {
-
-                if (j < SPLINE_RAIL_RESOLUTION - 1) {
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j + 1);
-                    triangles.push_back(vertexCount + j + 1);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount + j + 1);
-                    triangles.push_back(vertexCount + j);
-                }
-                else {
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION);
-                    triangles.push_back(vertexCount);
-                    triangles.push_back(vertexCount - SPLINE_RAIL_RESOLUTION + j);
-                    triangles.push_back(vertexCount);
-                    triangles.push_back(vertexCount + j);
-                }
-
-
-
-            }
-
-        }
-
-
-
-    }
+    std::vector<glm::vec2> uvs;
+    
+    //Left rail
+    generateRailVertices(glm::vec3(-0.45f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateRailVertices(glm::vec3(0.45f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateRailVertices(glm::vec3(0, -1.1f, 0), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
 
     // TODO: Add crossties to rails to complete the track model
 
@@ -235,11 +206,13 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     if (triangles.size() > 0) {
        
     }
-    segment->getMesh()->updateMesh(vertices, triangles);
+    segment->getMesh()->updateMesh(vertices, triangles, uvs);
 
     return true;
 
 }
+
+
 
 /// <summary>
 /// Interpolates between the points using the b-Spline algorithm

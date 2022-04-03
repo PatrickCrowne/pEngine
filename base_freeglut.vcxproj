@@ -172,7 +172,7 @@
     <ClCompile Include="src/util.cpp" />
     <ClCompile Include="src/glstate.cpp" />
     <ClCompile Include="src\Simulation\AssetReader.cpp" />
-    <ClCompile Include="src\Simulation\Components\Camera.cpp" />
+    <ClCompile Include="src\Simulation\SimObjects\Camera.cpp" />
     <ClCompile Include="src\Simulation\Components\Component.cpp" />
     <ClCompile Include="src\Simulation\Material.cpp" />
     <ClCompile Include="src\Simulation\Components\MeshRenderer.cpp" />
@@ -195,7 +195,7 @@
     <ClInclude Include="src/util.hpp" />
     <ClInclude Include="src/glstate.hpp" />
     <ClInclude Include="src\Simulation\AssetReader.h" />
-    <ClInclude Include="src\Simulation\Components\Camera.h" />
+    <ClInclude Include="src\Simulation\SimObjects\Camera.h" />
     <ClInclude Include="src\Simulation\Components\Component.h" />
     <ClInclude Include="src\Simulation\Material.h" />
     <ClInclude Include="src\Simulation\Components\MeshRenderer.h" />

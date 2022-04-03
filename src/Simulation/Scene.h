@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Components/Camera.h"
+#include "SimObjects/Camera.h"
 #include "SimObjects/SimObject.h"
 class Scene
 {

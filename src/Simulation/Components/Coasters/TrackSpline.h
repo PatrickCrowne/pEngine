@@ -20,6 +20,7 @@ public:
 	bool buildTrackMesh();
 
 private:
+	void generateRailVertices(glm::vec3 offset, float radius, std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 	bool buildTrackMeshSection(int index);
 	TrackMeshSegment *getTrackMeshSegment(int);
 	glm::vec3 bSpline(float t, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);

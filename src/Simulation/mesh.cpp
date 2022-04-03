@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 
+std::map<std::string, Mesh*> Mesh::meshes;
+
 // Helper functions
 int indexOfNumberLetter(std::string& str, int offset);
 int lastIndexOfNumberLetter(std::string& str);
@@ -176,7 +178,7 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 /// <param name="raw_vertices">The vertices for the mesh</param>
 /// <param name="raw_triangles">The triangles for the mesh</param>
 /// <param name="keepLocalGeometry">Preserve the mesh data in memory locally</param>
-void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_triangles, bool keepLocalGeometry) {
+void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_triangles, std::vector<glm::vec2> raw_uvs, bool keepLocalGeometry) {
 
 	release();
 
@@ -226,11 +228,19 @@ void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_
 		vertices[i + 1].norm = glm::normalize(accumulated_normals[v_elements[i + 1]]);
 		vertices[i + 2].norm = glm::normalize(accumulated_normals[v_elements[i + 2]]);
 
-		// Calculate uvs
-		vertices[i + 0].uv = glm::vec2(raw_vertices[v_elements[i + 0]].x, raw_vertices[v_elements[i + 0]].z);
-		vertices[i + 1].uv = glm::vec2(raw_vertices[v_elements[i + 1]].x, raw_vertices[v_elements[i + 1]].z);
-		vertices[i + 2].uv = glm::vec2(raw_vertices[v_elements[i + 2]].x, raw_vertices[v_elements[i + 2]].z);
-
+		
+		if (raw_uvs.size() > 0) {
+			vertices[i + 0].uv = raw_uvs[v_elements[i + 0]];
+			vertices[i + 1].uv = raw_uvs[v_elements[i + 1]];
+			vertices[i + 2].uv = raw_uvs[v_elements[i + 2]];
+		} 
+		else {
+			// Calculate uvs
+			vertices[i + 0].uv = glm::vec2(raw_vertices[v_elements[i + 0]].x, raw_vertices[v_elements[i + 0]].z);
+			vertices[i + 1].uv = glm::vec2(raw_vertices[v_elements[i + 1]].x, raw_vertices[v_elements[i + 1]].z);
+			vertices[i + 2].uv = glm::vec2(raw_vertices[v_elements[i + 2]].x, raw_vertices[v_elements[i + 2]].z);
+		}
+		
 	}
 	vcount = (GLsizei)vertices.size();
 
@@ -260,6 +270,16 @@ void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_
 	// Delete local copy of geometry
 	if (!keepLocalGeometry)
 		vertices.clear();
+
+}
+
+Mesh* Mesh::getMesh(std::string filename)
+{
+	
+	if (meshes.count(filename) > 0) {
+		return meshes.at(filename);
+	}
+	return new Mesh(filename);
 
 }
 

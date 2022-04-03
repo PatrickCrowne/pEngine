@@ -12,7 +12,7 @@ TrackMeshSegment::TrackMeshSegment(int i)
 	// Create the mesh renderer so the track can be rendered
 	trackMeshRenderer = new MeshRenderer();
 	trackMeshRenderer->mesh = new Mesh("models/cube.obj");
-	trackMeshRenderer->material = Material::getMaterial("materials/bunny.mat");
+	trackMeshRenderer->material = Material::getMaterial("materials/m.mat");
 	addComponent(this->trackMeshRenderer);
 
 }

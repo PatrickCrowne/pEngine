@@ -36,7 +36,7 @@
     <ClCompile Include="src/glstate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Simulation\Components\Camera.cpp">
+    <ClCompile Include="src\Simulation\SimObjects\Camera.cpp">
       <Filter>Source Files\Simulator\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Simulation\Components\Component.cpp">
@@ -101,7 +101,7 @@
     <ClInclude Include="src/glstate.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Simulation\Components\Camera.h">
+    <ClInclude Include="src\Simulation\SimObjects\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Simulation\Components\Component.h">

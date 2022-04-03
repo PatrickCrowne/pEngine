@@ -61,8 +61,6 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 
 	vertexFileSteam.close();
 
-	std::cout << "Shader: " << fragmentFile << "\n";
-
 	// Get uniform identifers
 	std::ifstream fragmentFileStream;
 	fragmentFileStream.open(fragmentFile);
@@ -98,8 +96,6 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 	}
 
 	fragmentFileStream.close();
-
-	std::cout << "Shader Compile Success!" << "\n";
 
 }
 

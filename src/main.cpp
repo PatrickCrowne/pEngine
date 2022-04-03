@@ -13,14 +13,17 @@ const int MENU_EXIT = 1;					// Exit application
 // OpenGL state
 std::unique_ptr<GLState> glState;
 
+// Pressed key list
+bool pressedKeys[512];
+
 // Initialization functions
 void initGLUT(int* argc, char** argv);
 void initMenu();
-void findObjFiles();
 
 // Callback functions
 void display();
 void reshape(GLint width, GLint height);
+void keyPress(unsigned char key, int x, int y);
 void keyRelease(unsigned char key, int x, int y);
 void mouseBtn(int button, int state, int x, int y);
 void mouseMove(int x, int y);
@@ -33,7 +36,7 @@ int main(int argc, char** argv) {
 	try {
 		// Create the window and menu
 		initGLUT(&argc, argv);
-		initMenu();
+		//initMenu();
 		// Initialize OpenGL (buffers, shaders, etc.)
 		glState = std::unique_ptr<GLState>(new GLState());
 		glState->initializeGL();
@@ -66,9 +69,11 @@ void initGLUT(int* argc, char** argv) {
 	// GLUT callbacks
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
+	glutKeyboardFunc(keyPress);
 	glutKeyboardUpFunc(keyRelease);
 	glutMouseFunc(mouseBtn);
 	glutMotionFunc(mouseMove);
+	glutPassiveMotionFunc(mouseMove);
 	glutIdleFunc(idle);
 	glutCloseFunc(cleanup);
 }
@@ -97,8 +102,14 @@ void reshape(GLint width, GLint height) {
 	glState->resizeGL(width, height);
 }
 
+void keyPress(unsigned char key, int x, int y) {
+	pressedKeys[key] = true;
+	std::cout << key << "\n";
+}
+
 // Called when a key is released
 void keyRelease(unsigned char key, int x, int y) {
+	pressedKeys[key] = false;
 	switch (key) {
 	case 27:	// Escape key
 		menu(MENU_EXIT);
@@ -109,12 +120,12 @@ void keyRelease(unsigned char key, int x, int y) {
 // Called when a mouse button is pressed or released
 void mouseBtn(int button, int state, int x, int y) {
 	// Press left mouse button
-	if (state == GLUT_DOWN && button == GLUT_LEFT_BUTTON) {
+	if (state == GLUT_UP && button == GLUT_RIGHT_BUTTON && !glState->isCamRotating()) {
 		// Start rotating the camera
 		glState->beginCameraRotate(glm::vec2(x, y));
 	}
 	// Release left mouse button
-	if (state == GLUT_UP && button == GLUT_LEFT_BUTTON) {
+	else if (state == GLUT_UP && button == GLUT_RIGHT_BUTTON && glState->isCamRotating()) {
 		// Stop camera rotation
 		glState->endCameraRotate();
 	}
@@ -134,16 +145,35 @@ void mouseBtn(int button, int state, int x, int y) {
 
 // Called when the mouse moves
 void mouseMove(int x, int y) {
-	if (glState->isCamRotating()) {
+	//if (glState->isCamRotating()) {
 		// Rotate the camera if currently rotating
 		glState->rotateCamera(glm::vec2(x, y));
-	}
+	//}
 }
 
 // Called when there are no events to process (i.e. every frame)
 void idle() {
+
+	glm::vec3 moveOffset = glm::vec3(0, 0, 0);
+
+	if (pressedKeys['w']) { // W Key
+		moveOffset += glm::vec3(0, 0, Simulator::deltaTime * 15.0f);
+	}
+	if (pressedKeys['s']) { // S Key
+		moveOffset += glm::vec3(0, 0, -Simulator::deltaTime * 15.0f);
+	}
+	if (pressedKeys['a']) { // A Key
+		moveOffset += glm::vec3(Simulator::deltaTime * 15.0f, 0, 0);
+	}
+	if (pressedKeys['d']) { // D Key
+		moveOffset += glm::vec3(-Simulator::deltaTime * 15.0f, 0, 0);
+	}
+
+	glState->moveCamera(moveOffset);
+
 	Simulator::Update();
 	glutPostRedisplay();
+
 }
 
 // Called when a menu button is pressed

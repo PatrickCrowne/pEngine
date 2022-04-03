@@ -19,6 +19,7 @@ GLState::GLState() :
 	width(1), height(1),
 	fovy(45.0f),
 	camCoords(0.0f, 0.0f, 2.0f),
+	camPos(0.0f, 0.0f, -2.0f),
 	camRotating(false),
 	initCamRot(glm::vec2(0, 0)),
 	initMousePos(glm::vec2(0, 0))
@@ -81,9 +82,10 @@ void GLState::paintGL() {
 	float aspect = (float)width / (float)height;
 	glm::mat4 proj = glm::perspective(glm::radians(fovy), aspect, 0.1f, 5000.0f);
 	// Camera viewpoint
-	glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -camCoords.z));
+	glm::mat4 view = glm::mat4(1.0f);
 	view = glm::rotate(view, glm::radians(camCoords.y), glm::vec3(1.0f, 0.0f, 0.0f));
 	view = glm::rotate(view, glm::radians(camCoords.x), glm::vec3(0.0f, 1.0f, 0.0f));
+	view = glm::translate(view, camPos);
 	// Combine transformations
 	xform = proj * view;
 
@@ -133,7 +135,17 @@ void GLState::rotateCamera(glm::vec2 mousePos) {
 	}
 }
 
+void GLState::moveCamera(glm::vec3 offset) {
+	glm::mat4 view = glm::mat4(1.0f);
+	view = glm::rotate(view, glm::radians(-camCoords.x), glm::vec3(0.0f, 1.0f, 0.0f));
+	view = glm::rotate(view, glm::radians(-camCoords.y), glm::vec3(1.0f, 0.0f, 0.0f));
+	glm::vec3 v(view * glm::vec4(offset.x, offset.y, offset.z, 0));
+
+	camPos += v;
+
+}
+
 // Moves the camera toward / away from the origin (scroll wheel)
 void GLState::offsetCamera(float offset) {
-	camCoords.z = glm::clamp(camCoords.z + offset, 0.1f, 10.0f);
+	camCoords.z = glm::clamp(camCoords.z + offset, 0.1f, 100.0f);
 }

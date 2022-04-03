@@ -59,7 +59,7 @@ SimObject::SimObject(std::string simObjectConfigFile) {
 				while (!buffer._Starts_with("}")) {
 
 					if (buffer._Starts_with("\tMESH")) {
-						meshRenderer->mesh = new Mesh(AssetReader::getString(buffer));
+						meshRenderer->mesh = Mesh::getMesh(AssetReader::getString(buffer));
 					}
 
 					if (buffer._Starts_with("\tMATERIAL")) {

@@ -55,7 +55,7 @@ void MeshRenderer::Render(glm::mat4 viewProjMatrix) {
 	material->applyAttributes();
 
 	viewProjMatrix = glm::scale(viewProjMatrix, MeshRenderer::transform->scale);
-	viewProjMatrix *= glm::toMat4(MeshRenderer::transform->rotation);
+	viewProjMatrix = viewProjMatrix * glm::toMat4(MeshRenderer::transform->rotation);
 	viewProjMatrix = glm::translate(viewProjMatrix, MeshRenderer::transform->position);
 
 	glUniformMatrix4fv(material->shader->uniformInputs.at(material->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(viewProjMatrix));

@@ -11,5 +11,7 @@ out vec3 outCol;	// Final pixel color
 
 void main() {
 	// Visualize normals as colors
-	outCol.rgb = texture(sampleTexture, fragUV).xyz;
+	vec3 col = texture(sampleTexture, fragUV).xyz;
+	col *= dot(fragNorm, vec3(1,1,1));
+	outCol = col;
 }

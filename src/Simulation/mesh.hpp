@@ -6,6 +6,7 @@
 #include <utility>
 #include <glm/glm.hpp>
 #include "../gl_core_3_3.h"
+#include <map>
 
 class Mesh {
 public:
@@ -23,7 +24,8 @@ public:
 
 	void load(std::string filename, bool keepLocalGeometry = false);
 	void draw();
-	void updateMesh(std::vector<glm::vec3> vertices, std::vector<int> triangles, bool keepLocalGeometry = false);
+	void updateMesh(std::vector<glm::vec3> vertices, std::vector<int> triangles, std::vector<glm::vec2> uvs, bool keepLocalGeometry = false);
+	static Mesh* getMesh(std::string filename);
 
 	// Mesh vertex format
 	struct Vertex {
@@ -36,6 +38,8 @@ public:
 
 protected:
 	void release();		// Release OpenGL resources
+
+	static std::map<std::string, Mesh*> meshes;
 
 	// Bounding box
 	glm::vec3 minBB;

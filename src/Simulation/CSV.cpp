@@ -20,17 +20,17 @@ CSV::CSV(std::string path)
 		}
 
 		int a = buffer.find_first_of("\t");
-		std::cout << buffer.substr(0, a) << "|\n";
-		float x = stof(buffer.substr(0, a));
 
 		int b = buffer.find_first_of("\t", a + 1);
-		std::cout << buffer.substr(a + 1, b) << "|\n";
-		float z = stof(buffer.substr(a + 1, b));
+		float x = stof(buffer.substr(a + 1, b));
 
 		a = b;
 		b = buffer.find_first_of("\t", a + 1);
-		std::cout << buffer.substr(a + 1, b) << "|\n";
 		float y = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		float z = stof(buffer.substr(a + 1, b));
 
 		positions.push_back(glm::vec3(x, y, z));
 
