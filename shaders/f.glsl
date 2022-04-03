@@ -13,5 +13,6 @@ void main() {
 	// Visualize normals as colors
 	vec3 col = texture(sampleTexture, fragUV).xyz;
 	col *= dot(fragNorm, vec3(1,1,1));
+	col += vec3(35 / 255, 35 / 255, 55 / 255);
 	outCol = col;
 }
