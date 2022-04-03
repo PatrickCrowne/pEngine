@@ -11,6 +11,7 @@ TrackSpline::TrackSpline() {
         addNode(csv->positions.at(i));
     }
     
+    tieMesh = Mesh::getMesh("models/tie.obj", true);
 
     buildTrackMesh();
 
@@ -123,6 +124,40 @@ void TrackSpline::generateRailVertices(glm::vec3 offset, float radius, std::vect
 
 }
 
+void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3) {
+
+    int railSegmentCount = (int)(length * 2) - 1;
+    if (railSegmentCount < 1) railSegmentCount = 1;
+
+    glm::vec3 curPos;
+    glm::vec3 lastPos;
+
+    for (int i = 0; i <= railSegmentCount; i++) {
+
+        curPos = bSpline((float)i / (float)railSegmentCount, p0, p1, p2, p3);
+        lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.1f, p0, p1, p2, p3);
+
+        // TODO: Add rolling
+        glm::vec3 forward = glm::normalize(lastPos - curPos);
+        glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0, 1, 0)));
+        glm::vec3 up = -glm::normalize(glm::cross(forward, right));
+        glm::vec3 position = curPos;
+        int vertexCount = vertices->size();
+
+        for (int j = 0; j < tieMesh->vertices.size(); j++) {
+
+            glm::vec3 vertexPos = tieMesh->vertices.at(j).pos;
+            vertices->push_back(position + (vertexPos.x * right) + (vertexPos.y * up) + (vertexPos.z * forward));
+            uvs->push_back(tieMesh->vertices.at(j).uv);
+            triangles->push_back(vertexCount + j);
+
+        }
+
+
+    }
+
+}
+
 /// <summary>
 /// Builds a 
 /// </summary>
@@ -198,7 +233,8 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     //Left rail
     generateRailVertices(glm::vec3(-0.45f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
     generateRailVertices(glm::vec3(0.45f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
-    generateRailVertices(glm::vec3(0, -1.1f, 0), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateRailVertices(glm::vec3(0, -1.0f, 0), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateCrossties(&vertices, &triangles, &uvs, length, p0, p1, p2, p3);
 
     // TODO: Add crossties to rails to complete the track model
 

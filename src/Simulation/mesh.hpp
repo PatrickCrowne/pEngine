@@ -25,7 +25,7 @@ public:
 	void load(std::string filename, bool keepLocalGeometry = false);
 	void draw();
 	void updateMesh(std::vector<glm::vec3> vertices, std::vector<int> triangles, std::vector<glm::vec2> uvs, bool keepLocalGeometry = false);
-	static Mesh* getMesh(std::string filename);
+	static Mesh* getMesh(std::string filename, bool keepLocalGeometry = false);
 
 	// Mesh vertex format
 	struct Vertex {

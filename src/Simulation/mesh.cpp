@@ -273,13 +273,13 @@ void Mesh::updateMesh(std::vector<glm::vec3> raw_vertices, std::vector<int> raw_
 
 }
 
-Mesh* Mesh::getMesh(std::string filename)
+Mesh* Mesh::getMesh(std::string filename, bool keepLocalGeometry)
 {
 	
 	if (meshes.count(filename) > 0) {
 		return meshes.at(filename);
 	}
-	return new Mesh(filename);
+	return new Mesh(filename, keepLocalGeometry);
 
 }
 
