@@ -55,8 +55,12 @@ void MeshRenderer::Render(glm::mat4 viewProjMatrix) {
 	material->applyAttributes();
 
 	viewProjMatrix = glm::scale(viewProjMatrix, MeshRenderer::transform->scale);
-	viewProjMatrix = viewProjMatrix * glm::toMat4(MeshRenderer::transform->rotation);
 	viewProjMatrix = glm::translate(viewProjMatrix, MeshRenderer::transform->position);
+	glm::vec3 eulerAngles = glm::eulerAngles(MeshRenderer::transform->rotation);
+	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.x, glm::vec3(1, 0, 0));
+	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.y, glm::vec3(0, 1, 0));
+	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.z, glm::vec3(0, 0, 1));
+	
 
 	glUniformMatrix4fv(material->shader->uniformInputs.at(material->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(viewProjMatrix));
 

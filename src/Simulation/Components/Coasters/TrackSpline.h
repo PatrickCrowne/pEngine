@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/gtx/quaternion.hpp>
 #include <glm/glm.hpp>
 #include <vector>
 #include "../../SimObjects/SimObject.h"
@@ -20,6 +21,7 @@ public:
 	bool buildTrackMesh();
 
 private:
+	glm::vec3 getStartTangent(glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 	void generateRailVertices(glm::vec3 offset, float radius, std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 	void generateCrossties(std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 	bool buildTrackMeshSection(int index);

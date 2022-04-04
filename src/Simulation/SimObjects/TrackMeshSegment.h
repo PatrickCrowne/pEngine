@@ -10,6 +10,8 @@ public:
 	Mesh* getMesh();
 	float length;
 	int index;
+	glm::vec3 startNormal;
+	glm::vec3 endNormal;
 protected:
 	MeshRenderer *trackMeshRenderer;
 

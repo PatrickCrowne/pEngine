@@ -10,9 +10,9 @@ Transform::Transform()
 void Transform::SetEuler(float x, float y, float z)
 {
 	glm::mat4 rotationMatrix = glm::mat4();
-	rotationMatrix = glm::rotate(rotationMatrix, z, glm::vec3(0, 0, 1));
-	rotationMatrix = glm::rotate(rotationMatrix, y, glm::vec3(0, 1, 0));
-	rotationMatrix = glm::rotate(rotationMatrix, x, glm::vec3(1, 0, 0));
+	rotationMatrix = glm::rotate(rotationMatrix, z / 180.0f * 3.14159265f, glm::vec3(0, 0, 1));
+	rotationMatrix = glm::rotate(rotationMatrix, y / 180.0f * 3.14159265f, glm::vec3(0, 1, 0));
+	rotationMatrix = glm::rotate(rotationMatrix, x / 180.0f * 3.14159265f, glm::vec3(1, 0, 0));
 	rotation = glm::toQuat(rotationMatrix);
 }
 
@@ -24,8 +24,8 @@ void Transform::SetEuler(glm::vec3 eulerAngles)
 void Transform::RotateEuler(float x, float y, float z)
 {
 	glm::mat4 rotationMatrix = glm::toMat4(rotation);
-	rotationMatrix = glm::rotate(rotationMatrix, z, glm::vec3(0, 0, 1));
-	rotationMatrix = glm::rotate(rotationMatrix, y, glm::vec3(0, 1, 0));
-	rotationMatrix = glm::rotate(rotationMatrix, x, glm::vec3(1, 0, 0));
+	rotationMatrix = glm::rotate(rotationMatrix, z / 180.0f * 3.14159265f, glm::vec3(0, 0, 1));
+	rotationMatrix = glm::rotate(rotationMatrix, y / 180.0f * 3.14159265f, glm::vec3(0, 1, 0));
+	rotationMatrix = glm::rotate(rotationMatrix, x / 180.0f * 3.14159265f, glm::vec3(1, 0, 0));
 	rotation = glm::toQuat(rotationMatrix);
 }

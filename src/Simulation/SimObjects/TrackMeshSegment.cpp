@@ -15,6 +15,8 @@ TrackMeshSegment::TrackMeshSegment(int i)
 	trackMeshRenderer->material = Material::getMaterial("materials/m.mat");
 	addComponent(this->trackMeshRenderer);
 
+	transform.SetEuler(0, 90, 0);
+
 }
 
 /// <summary>
