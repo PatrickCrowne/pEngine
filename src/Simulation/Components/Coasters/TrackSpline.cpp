@@ -149,6 +149,7 @@ void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vecto
 
     glm::vec3 curPos;
     glm::vec3 lastPos;
+    glm::vec3 forward, right, up;
 
     for (int i = 0; i <= railSegmentCount; i++) {
 
@@ -156,9 +157,16 @@ void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vecto
         lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.001f, p0, p1, p2, p3);
 
         // TODO: Add rolling
-        glm::vec3 forward = glm::normalize(lastPos - curPos);
-        glm::vec3 right = glm::normalize(glm::cross(forward, glm::vec3(0, 1, 0)));
-        glm::vec3 up = -glm::normalize(glm::cross(forward, right));
+
+        forward = glm::normalize(lastPos - curPos);
+        if (i == 0) {
+            right = glm::normalize(glm::cross(forward, glm::vec3(0, 1, 0)));
+        }
+        else {
+            right = glm::normalize(glm::cross(forward, up));
+        }
+        up = -glm::normalize(glm::cross(forward, right));
+
         glm::vec3 position = curPos;
         int vertexCount = vertices->size();
 
