@@ -3,6 +3,6 @@ TRANSFORM_POSITION = vec3(0, 0, 0)
 TRANSFORM_ROTATION = vec3(0, 0, 0)
 TRANSFORM_SCALE = vec3(1, 1, 1)
 COMPONENT MeshRenderer {
-	MESH = "models/bunny.obj"
-	MATERIAL = "materials/bunny.mat"
+	MESH = "models/cube.obj"
+	MATERIAL = "materials/m.mat"
 }

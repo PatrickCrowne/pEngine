@@ -13,13 +13,13 @@
 #include "Simulation/Components/Coasters/TrackSpline.h"
 
 std::vector<MeshRenderer*> GLState::renderers;
+glm::vec3 GLState::camPos;
 
 // Constructor
 GLState::GLState() :
 	width(1), height(1),
 	fovy(45.0f),
 	camCoords(0.0f, 0.0f, 2.0f),
-	camPos(0.0f, 0.0f, -2.0f),
 	camRotating(false),
 	initCamRot(glm::vec2(0, 0)),
 	initMousePos(glm::vec2(0, 0))

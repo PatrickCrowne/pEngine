@@ -62,7 +62,14 @@ void MeshRenderer::Render(glm::mat4 viewProjMatrix) {
 	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.z, glm::vec3(0, 0, 1));
 	
 
-	glUniformMatrix4fv(material->shader->uniformInputs.at(material->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(viewProjMatrix));
+	if (material->modelMatrixAttributeName.length() > 0)
+		glUniformMatrix4fv(material->shader->uniformInputs.at(material->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(viewProjMatrix));
+
+	if (material->cameraPositionAttributeName.length() > 0)
+		glUniform3fv(material->shader->uniformInputs.at(material->cameraPositionAttributeName), 1, glm::value_ptr(GLState::camPos));
+
+	if (material->modelPositionAttributeName.length() > 0)
+		glUniform3fv(material->shader->uniformInputs.at(material->modelPositionAttributeName), 1, glm::value_ptr(-MeshRenderer::transform->position));
 
 	// Draw the mesh
 	mesh->draw();

@@ -8,12 +8,13 @@ smooth out vec3 fragNorm;	// Model-space interpolated normal
 smooth out vec3 fragColor;
 smooth out vec3 fragPos;
 smooth out vec2 fragUV;
+smooth out vec3 camPos;
+smooth out vec3 modelPos;
 
-uniform mat4 xform;			// Model-to-clip space transform
+uniform mat4 xform;
 uniform vec3 color;
-uniform vec3 colorB;
-uniform int a;
-uniform float b;
+uniform vec3 camera;
+uniform vec3 model;
 
 void main() {
 	// Transform vertex position
@@ -23,5 +24,7 @@ void main() {
 
 	// Interpolate normals
 	fragNorm = norm;
-	fragColor = mix(color, colorB, dot(norm, vec3(0, 1, 0)));
+	fragColor = color;
+	camPos = camera;
+	modelPos = model; 
 }

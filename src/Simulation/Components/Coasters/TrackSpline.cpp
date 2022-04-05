@@ -11,7 +11,7 @@ TrackSpline::TrackSpline() {
         addNode(csv->positions.at(i));
     }
     
-    tieMesh = Mesh::getMesh("models/tie.obj", true);
+    tieMesh = Mesh::getMesh("models/crossties/arrow_tie.obj", true);
 
     buildTrackMesh();
 
@@ -264,9 +264,9 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     std::vector<glm::vec2> uvs;
     
     // Add Rails
-    generateRailVertices(glm::vec3(-0.45f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
-    generateRailVertices(glm::vec3(0.45f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
-    generateRailVertices(glm::vec3(0, -1.0f, 0), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateRailVertices(glm::vec3(-0.6f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateRailVertices(glm::vec3(0.6f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
+    generateRailVertices(glm::vec3(0, -0.75f, 0), 0.15f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3);
 
     // Add Crossties
     generateCrossties(&vertices, &triangles, &uvs, length, p0, p1, p2, p3);

@@ -49,6 +49,14 @@ Material::Material(std::string materialConfigFile) {
 			if (propertyValue._Equal(MAT_MODEL_MATRIX)) {
 				modelMatrixAttributeName = propertyName;
 			}
+			// Camrea Pos identifier
+			else if (propertyValue._Equal(MAT_CAMERA_POSITION)) {
+				cameraPositionAttributeName = propertyName;
+			}
+			// Camrea Pos identifier
+			else if (propertyValue._Equal(MAT_MODEL_POSITION)) {
+				modelPositionAttributeName = propertyName;
+			}
 			// Process generic attributes
 			else {
 

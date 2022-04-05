@@ -44,7 +44,7 @@ public:
 		glm::vec3 norm;		// Normal
 	};
 
-	
+	static glm::vec3 camPos;		// Camera euclidean coordinates
 
 protected:
 
@@ -52,7 +52,6 @@ protected:
 	int width, height;		// Width and height of the window
 	float fovy;				// Vertical field of view in degrees
 	glm::vec3 camCoords;	// Camera spherical coordinates
-	glm::vec3 camPos;		// Camera euclidean coordinates
 	bool camRotating;		// Whether camera is currently rotating
 	glm::vec2 initCamRot;	// Initial camera rotation on click
 	glm::vec2 initMousePos;	// Initial mouse position on click

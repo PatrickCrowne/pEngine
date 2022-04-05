@@ -13,6 +13,7 @@ Texture::Texture(std::string path) {
 	}
 	else {
 		id = prepareTexture(path.c_str());
+		
 		textures.emplace(path, id);
 	}
 	
@@ -22,6 +23,7 @@ void Texture::activeTexture(int textureIndex) {
 	// Activate the texture unit; more than one texture is allowed to use: GL_TEXTURE0, GL_TEXTURE1, ...
 	glActiveTexture(GL_TEXTURE0 + textureIndex);
 	glBindTexture(GL_TEXTURE_2D, id);  // bind the texture
+	glEnable(GL_TEXTURE_2D);
 }
 
 unsigned int Texture::prepareTexture(const char* filename) {

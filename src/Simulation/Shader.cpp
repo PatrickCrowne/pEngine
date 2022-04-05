@@ -22,8 +22,6 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 		glDeleteShader(s);
 	shaders.clear();
 
-	std::cout << "Shader: " << vertexFile << "\n";
-
 	// Get uniform identifers
 	std::ifstream vertexFileSteam;
 	vertexFileSteam.open(vertexFile);
@@ -54,7 +52,8 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 				buffer = buffer.substr(0, pos);
 			}
 			// Add the uniform input to the map
-			uniformInputs.emplace(buffer, glGetUniformLocation(compiledShaderId, buffer.c_str()));
+			GLuint location = glGetUniformLocation(compiledShaderId, buffer.c_str());
+			uniformInputs.emplace(buffer, location);
 			uniformInputType.emplace(buffer, dataType);
 		}
 	}
@@ -90,7 +89,9 @@ Shader::Shader(std::string vertexFile, std::string fragmentFile) {
 				buffer = buffer.substr(0, pos);
 			}
 			// Add the uniform input to the map
-			uniformInputs.emplace(buffer, glGetUniformLocation(compiledShaderId, buffer.c_str()));
+			
+			GLuint location = glGetUniformLocation(compiledShaderId, buffer.c_str());
+			uniformInputs.emplace(buffer, location);
 			uniformInputType.emplace(buffer, dataType);
 		}
 	}
