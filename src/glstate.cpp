@@ -13,6 +13,7 @@
 #include "Simulation/Components/Coasters/TrackSpline.h"
 
 std::vector<MeshRenderer*> GLState::renderers;
+std::vector<MeshRenderer*> GLState::uiRenderers;
 glm::vec3 GLState::camPos;
 
 // Constructor
@@ -44,14 +45,20 @@ void GLState::initializeGL() {
 	SimObject* simObject = new SimObject("simobjects/bunny.simobj");
 	scene->registerSimObject(simObject);
 
-	SimObject* simObject2 = new SimObject("simobjects/testobj.simobj");
+	SimObject* simObject2 = new SimObject("simobjects/test.simobj");
 	scene->registerSimObject(simObject2);
+
+	SimObject* simObject3 = new SimObject("simobjects/uipanel.simobj");
+	scene->registerSimObject(simObject3);
 
 	TrackSpline* trackSpline = new TrackSpline();
 
 	Simulator::activeScene = scene;
 
 	// END TEMP
+
+	// Build GUI
+	
 
 }
 
@@ -69,6 +76,22 @@ void GLState::registerRenderer(MeshRenderer* newRenderer) {
 /// <param name="renderer"></param>
 void GLState::unregisterRenderer(MeshRenderer* renderer) {
 	renderers.erase(std::find(renderers.begin(), renderers.end(), renderer));
+}
+
+/// <summary>
+/// Registers a new UI renderer to the scene, so it can be included in the render loop
+/// </summary>
+/// <param name="newRenderer"></param>
+void GLState::registerUIRenderer(MeshRenderer* newRenderer) {
+	uiRenderers.push_back(newRenderer);
+}
+
+/// <summary>
+/// Unregisters a UI renderer from the GLState
+/// </summary>
+/// <param name="renderer"></param>
+void GLState::unregisterUIRenderer(MeshRenderer* renderer) {
+	uiRenderers.erase(std::find(uiRenderers.begin(), uiRenderers.end(), renderer));
 }
 
 // Called when window requests a screen redraw
@@ -94,8 +117,22 @@ void GLState::paintGL() {
 		renderer->Render(xform);
 	}
 
+	// Render GUI
+	// Construct an orthographic matrix for the camera
+	// Perspective projection
+	aspect = (float)width / (float)height;
+	proj = glm::ortho(1.0f, aspect, 0.1f, 100.0f);
+	xform = proj;
+
+	for (MeshRenderer* renderer : uiRenderers) {
+		renderer->Render(xform);
+	}
+	
+
 	// Clear the shader reference
 	glUseProgram(0);
+
+
 
 }
 

@@ -5,6 +5,7 @@
 #include "Simulation/Simulator.h"
 #include "glstate.hpp"
 #include <GL/freeglut.h>
+
 namespace fs = std::filesystem;
 
 // Menu identifiers
@@ -64,7 +65,7 @@ void initGLUT(int* argc, char** argv) {
 	glutInitContextProfile(GLUT_CORE_PROFILE);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	// Create the window
-	glutCreateWindow("pEngine");
+	int mainWindow = glutCreateWindow("pEngine");
 
 	// GLUT callbacks
 	glutDisplayFunc(display);

@@ -116,6 +116,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>../glui-2.37</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -184,6 +185,7 @@
     <ClCompile Include="src\Simulation\SimObjects\TrackMeshSegment.cpp" />
     <ClCompile Include="src\Simulation\Texture.cpp" />
     <ClCompile Include="src\stb_image.cpp" />
+    <ClCompile Include="src\Simulation\SimObjects\UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Simulation\CSV.h" />
@@ -207,6 +209,7 @@
     <ClInclude Include="src\Simulation\SimObjects\TrackMeshSegment.h" />
     <ClInclude Include="src\Simulation\Texture.h" />
     <ClInclude Include="src\stb_image.h" />
+    <ClInclude Include="src\Simulation\SimObjects\UI\UIPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="materials\bunny.mat" />
@@ -214,7 +217,8 @@
     <None Include="shaders/f.glsl" />
     <None Include="materials\m.mat" />
     <None Include="simobjects\bunny.simobj" />
-    <None Include="simobjects\testobj.simobj" />
+    <None Include="simobjects\test.simobj" />
+    <None Include="simobjects\uipanel.simobj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

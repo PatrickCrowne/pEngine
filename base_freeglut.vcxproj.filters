@@ -87,6 +87,9 @@
     <ClCompile Include="src\Simulation\CSV.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Simulation\SimObjects\UI\UIPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/gl_core_3_3.h">
@@ -152,6 +155,9 @@
     <ClInclude Include="src\Simulation\CSV.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Simulation\SimObjects\UI\UIPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders/f.glsl">
@@ -161,8 +167,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="materials\m.mat" />
-    <None Include="simobjects\testobj.simobj" />
+    <None Include="simobjects\test.simobj" />
     <None Include="simobjects\bunny.simobj" />
     <None Include="materials\bunny.mat" />
+    <None Include="simobjects\uipanel.simobj" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,8 @@
+SIMOBJECT_NAME = "Test Simobject"
+TRANSFORM_POSITION = vec3(0.3, 0, 0)
+TRANSFORM_ROTATION = vec3(0, 0, 0)
+TRANSFORM_SCALE = vec3(0.2, 0.2, 0.2)
+COMPONENT MeshRenderer {
+	MESH = "models/tie.obj"
+	MATERIAL = "materials/m.mat"
+}

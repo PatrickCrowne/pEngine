@@ -37,6 +37,8 @@ public:
 	// Object Registration
 	static void registerRenderer(MeshRenderer*);
 	static void unregisterRenderer(MeshRenderer*);
+	static void registerUIRenderer(MeshRenderer*);
+	static void unregisterUIRenderer(MeshRenderer*);
 
 	// Per-vertex attributes
 	struct Vertex {
@@ -57,6 +59,7 @@ protected:
 	glm::vec2 initMousePos;	// Initial mouse position on click
 
 	static std::vector<MeshRenderer*> renderers; // List of renderers for this scene
+	static std::vector<MeshRenderer*> uiRenderers; // List of renderers for this scene
 
 };
 
