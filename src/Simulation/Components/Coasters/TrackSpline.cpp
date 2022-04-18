@@ -246,39 +246,6 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     // Update the length
     segment->length = length;
 
-    //
-    // Resample curve
-    //
-
-    // create a step size that will maximize the chance that it will line up nicely at the end
-    const float targetStepSize = 0.05f / length;
-    float stepSize = 1.0f / length;
-    float splinePos = 0;
-    float distance = 0;
-    lastPos = bSpline(splinePos, p0, p1, p2, p3);
-    curPos = lastPos;
-    bakedSpline.push_back(lastPos);
-    while (splinePos <= 1) {
-        
-        // Iteratively sample the spline until a step size is found within an acceptable range of accuracy
-        for (int iterations = 0; iterations < SPLINE_ITERATION_COUNT; iterations++) {
-
-            curPos = bSpline(splinePos + stepSize, p0, p1, p2, p3);
-            distance = glm::distance(curPos, lastPos);
-            
-            stepSize *= (targetStepSize / distance);
-
-        }
-        splinePos += stepSize;
-        curPos = bSpline(splinePos, p0, p1, p2, p3);
-        bakedSpline.push_back(curPos);
-        lastPos = curPos;
-
-    }
-
-    // Sample baked spline to create rails
-
-
     // Create vectors to store mesh data
     std::vector<glm::vec3> vertices;
     std::vector<int> triangles;

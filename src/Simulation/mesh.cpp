@@ -44,8 +44,10 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 	// Store vertex and normal data while reading
 	std::vector<glm::vec3> raw_vertices;
 	std::vector<glm::vec3> raw_normals;
+	std::vector<glm::vec2> raw_uvs;
 	std::vector<unsigned int> v_elements;
 	std::vector<unsigned int> n_elements;
+	std::vector<unsigned int> uv_elements;
 
 	std::string line;
 	while (getline(file, line)) {
@@ -61,6 +63,28 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 			minBB = glm::min(minBB, vert);
 			maxBB = glm::max(maxBB, vert);
 		} else if (line.substr(0, 3) == "vn ") {
+			// Read normal data
+			int index1 = indexOfNumberLetter(line, 2);
+			int index2 = lastIndexOfNumberLetter(line);
+			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
+			raw_normals.push_back(glm::vec3(stof(values[0]), stof(values[1]), stof(values[2])));
+
+		} else if (line.substr(0, 3) == "vn ") {
+			// Read normal data
+			int index1 = indexOfNumberLetter(line, 2);
+			int index2 = lastIndexOfNumberLetter(line);
+			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
+			raw_normals.push_back(glm::vec3(stof(values[0]), stof(values[1]), stof(values[2])));
+
+		} else if (line.substr(0, 3) == "vt ") {
+			// Read normal data
+			int index1 = indexOfNumberLetter(line, 2);
+			int index2 = lastIndexOfNumberLetter(line);
+			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
+			raw_uvs.push_back(glm::vec2(stof(values[0]), stof(values[1])));
+
+		}
+		else if (line.substr(0, 3) == "vn ") {
 			// Read normal data
 			int index1 = indexOfNumberLetter(line, 2);
 			int index2 = lastIndexOfNumberLetter(line);
@@ -89,6 +113,7 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 					n_elements.push_back(stoul(v2[2]) - 1);
 					n_elements.push_back(stoul(v3[2]) - 1);
 				}
+
 			}
 		}
 	}
@@ -138,9 +163,17 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 		}
 
 		// Check for uvs
-		vertices[i + 0].uv = glm::vec2(raw_vertices[v_elements[i + 0]].x, raw_vertices[v_elements[i + 0]].z);
-		vertices[i + 1].uv = glm::vec2(raw_vertices[v_elements[i + 1]].x, raw_vertices[v_elements[i + 1]].z);
-		vertices[i + 2].uv = glm::vec2(raw_vertices[v_elements[i + 2]].x, raw_vertices[v_elements[i + 2]].z);
+		if (raw_uvs.size() > 0) {
+			vertices[i + 0].uv = raw_uvs[v_elements[i + 0]];
+			vertices[i + 1].uv = raw_uvs[v_elements[i + 1]];
+			vertices[i + 2].uv = raw_uvs[v_elements[i + 2]];
+		}
+		else {
+			// Calculate uvs
+			vertices[i + 0].uv = glm::vec2(raw_vertices[v_elements[i + 0]].x, raw_vertices[v_elements[i + 0]].z);
+			vertices[i + 1].uv = glm::vec2(raw_vertices[v_elements[i + 1]].x, raw_vertices[v_elements[i + 1]].z);
+			vertices[i + 2].uv = glm::vec2(raw_vertices[v_elements[i + 2]].x, raw_vertices[v_elements[i + 2]].z);
+		}
 
 	}
 	vcount = (GLsizei)vertices.size();

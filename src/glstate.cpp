@@ -48,7 +48,7 @@ void GLState::initializeGL() {
 	SimObject* simObject2 = new SimObject("simobjects/test.simobj");
 	scene->registerSimObject(simObject2);
 
-	SimObject* simObject3 = new SimObject("simobjects/uipanel.simobj");
+	SimObject* simObject3 = new SimObject("simobjects/skybox.simobj");
 	scene->registerSimObject(simObject3);
 
 	TrackSpline* trackSpline = new TrackSpline();
@@ -103,7 +103,7 @@ void GLState::paintGL() {
 	glm::mat4 xform(1.0f);
 	// Perspective projection
 	float aspect = (float)width / (float)height;
-	glm::mat4 proj = glm::perspective(glm::radians(fovy), aspect, 0.1f, 5000.0f);
+	glm::mat4 proj = glm::perspective(glm::radians(fovy), aspect, 0.1f, 10000.0f);
 	// Camera viewpoint
 	glm::mat4 view = glm::mat4(1.0f);
 	view = glm::rotate(view, glm::radians(camCoords.y), glm::vec3(1.0f, 0.0f, 0.0f));

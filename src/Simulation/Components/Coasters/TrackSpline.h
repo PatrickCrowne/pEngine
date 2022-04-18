@@ -30,6 +30,7 @@ private:
 	std::vector<glm::vec3> nodes;
 	std::map<int, TrackMeshSegment*> trackSegments;
 	std::vector<glm::vec3> bakedSpline;
+	std::vector<glm::vec3> bakedNormal;
 	Mesh* tieMesh;
 
 };

@@ -213,10 +213,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="materials\bunny.mat" />
+    <None Include="materials\skybox.mat" />
     <None Include="shaders/v.glsl" />
     <None Include="shaders/f.glsl" />
     <None Include="materials\m.mat" />
+    <None Include="shaders\sky_frag.glsl" />
+    <None Include="shaders\sky_vert.glsl" />
     <None Include="simobjects\bunny.simobj" />
+    <None Include="simobjects\skybox.simobj" />
     <None Include="simobjects\test.simobj" />
     <None Include="simobjects\uipanel.simobj" />
   </ItemGroup>

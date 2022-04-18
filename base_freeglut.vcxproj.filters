@@ -171,5 +171,9 @@
     <None Include="simobjects\bunny.simobj" />
     <None Include="materials\bunny.mat" />
     <None Include="simobjects\uipanel.simobj" />
+    <None Include="shaders\sky_frag.glsl" />
+    <None Include="shaders\sky_vert.glsl" />
+    <None Include="materials\skybox.mat" />
+    <None Include="simobjects\skybox.simobj" />
   </ItemGroup>
 </Project>
