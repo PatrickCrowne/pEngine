@@ -103,9 +103,9 @@ void reshape(GLint width, GLint height) {
 	glState->resizeGL(width, height);
 }
 
+// Called when a key is pressed
 void keyPress(unsigned char key, int x, int y) {
 	pressedKeys[key] = true;
-	std::cout << key << "\n";
 }
 
 // Called when a key is released
