@@ -5,7 +5,7 @@
 
 TrackSpline::TrackSpline() {
 
-    CSV* csv = new CSV("tracks/test.csv");
+    CSV* csv = new CSV("tracks/test2.csv");
 
     for (int i = 0; i < csv->positions.size(); i++) {
         addNode(csv->positions.at(i), csv->up.at(i));
@@ -188,7 +188,7 @@ void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vecto
     glm::vec3 n3
 ) {
 
-    int railSegmentCount = (int)(length * 2) - 1;
+    int railSegmentCount = (int)(length * 1.2f) - 1;
     if (railSegmentCount < 1) railSegmentCount = 1;
 
     glm::vec3 curPos;

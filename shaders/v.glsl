@@ -9,22 +9,22 @@ smooth out vec3 fragColor;
 smooth out vec3 fragPos;
 smooth out vec2 fragUV;
 smooth out vec3 camPos;
-smooth out vec3 modelPos;
 
-uniform mat4 xform;
+uniform mat4 viewProjMatrix;
+uniform mat4 modelMatrix;
 uniform vec3 color;
 uniform vec3 camera;
-uniform vec3 model;
 
 void main() {
 	// Transform vertex position
-	gl_Position = xform * vec4(pos, 1.0);
-	fragPos = pos;
+	
+	fragPos = vec3(modelMatrix * vec4(pos, 1.0));
+	fragNorm = vec3(modelMatrix * vec4(norm, 0.0));
 	fragUV = uv;
-
-	// Interpolate normals
-	fragNorm = norm;
 	fragColor = color;
-	camPos = camera;
-	modelPos = model; 
+	camPos = -camera;	// Camera position is reversed, to make it relative
+
+
+	gl_Position = viewProjMatrix * vec4(fragPos, 1.0);
+
 }

@@ -54,16 +54,21 @@ void MeshRenderer::Render(glm::mat4 viewProjMatrix) {
 	// Apply attributes to shader
 	material->applyAttributes();
 
-	viewProjMatrix = glm::scale(viewProjMatrix, MeshRenderer::transform->scale);
-	viewProjMatrix = glm::translate(viewProjMatrix, MeshRenderer::transform->position);
+	glm::mat4 modelMatrix = glm::mat4(1);
+
+	modelMatrix = glm::scale(modelMatrix, MeshRenderer::transform->scale);
+	modelMatrix = glm::translate(modelMatrix, MeshRenderer::transform->position);
 	glm::vec3 eulerAngles = glm::eulerAngles(MeshRenderer::transform->rotation);
-	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.x, glm::vec3(1, 0, 0));
-	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.y, glm::vec3(0, 1, 0));
-	viewProjMatrix = glm::rotate(viewProjMatrix, eulerAngles.z, glm::vec3(0, 0, 1));
+	modelMatrix = glm::rotate(modelMatrix, eulerAngles.x, glm::vec3(1, 0, 0));
+	modelMatrix = glm::rotate(modelMatrix, eulerAngles.y, glm::vec3(0, 1, 0));
+	modelMatrix = glm::rotate(modelMatrix, eulerAngles.z, glm::vec3(0, 0, 1));
 	
 
 	if (material->modelMatrixAttributeName.length() > 0)
-		glUniformMatrix4fv(material->shader->uniformInputs.at(material->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(viewProjMatrix));
+		glUniformMatrix4fv(material->shader->uniformInputs.at(material->modelMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+
+	if (material->viewProjMatrixAttributeName.length() > 0)
+		glUniformMatrix4fv(material->shader->uniformInputs.at(material->viewProjMatrixAttributeName), 1, GL_FALSE, glm::value_ptr(viewProjMatrix));
 
 	if (material->cameraPositionAttributeName.length() > 0)
 		glUniform3fv(material->shader->uniformInputs.at(material->cameraPositionAttributeName), 1, glm::value_ptr(GLState::camPos));

@@ -49,6 +49,10 @@ Material::Material(std::string materialConfigFile) {
 			if (propertyValue._Equal(MAT_MODEL_MATRIX)) {
 				modelMatrixAttributeName = propertyName;
 			}
+			// View Projection Matrix Identifier
+			if (propertyValue._Equal(MAT_VIEWPROJ_MATRIX)) {
+				viewProjMatrixAttributeName = propertyName;
+			}
 			// Camrea Pos identifier
 			else if (propertyValue._Equal(MAT_CAMERA_POSITION)) {
 				cameraPositionAttributeName = propertyName;

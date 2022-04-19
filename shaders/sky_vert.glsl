@@ -7,11 +7,12 @@ layout(location = 2) in vec2 uv;		// Model-space uv
 smooth out vec3 fragNorm;	// Model-space interpolated normal
 smooth out vec2 fragUV;
 
-uniform mat4 xform;
+uniform mat4 viewProjMatrix;
+uniform mat4 modelMatrix;
 
 void main() {
 	// Transform vertex position
-	gl_Position = xform * vec4(pos, 1.0);
+	gl_Position = viewProjMatrix * vec4(pos, 1.0);
 	fragUV = uv;
 	fragNorm = norm;
 }

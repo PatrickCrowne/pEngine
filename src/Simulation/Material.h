@@ -11,6 +11,7 @@
 #define MAT_FRAGMENT_SHADER "FRAGMENT_SHADER"
 #define MAT_PROPERTY "PROPERTY"
 #define MAT_MODEL_MATRIX "MODEL_MATRIX"
+#define MAT_VIEWPROJ_MATRIX "VIEWPROJ_MATRIX"
 #define MAT_CAMERA_POSITION "CAMREA_POSITION"
 #define MAT_MODEL_POSITION "MODEL_POSITION"
 
@@ -25,6 +26,7 @@ public:
 	Material(std::string);
 	std::string name;
 	std::string modelMatrixAttributeName;
+	std::string viewProjMatrixAttributeName;
 	std::string cameraPositionAttributeName;
 	std::string modelPositionAttributeName;
 	bool registerAttribute(std::string name, int type, void* value);
