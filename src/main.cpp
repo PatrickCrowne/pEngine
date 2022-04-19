@@ -63,9 +63,12 @@ void initGLUT(int* argc, char** argv) {
 	glutInitWindowSize(width, height);
 	glutInitContextVersion(3, 3);
 	glutInitContextProfile(GLUT_CORE_PROFILE);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
+	glutSetOption(GLUT_MULTISAMPLE, 8);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE | GLUT_MULTISAMPLE);
 	// Create the window
 	int mainWindow = glutCreateWindow("pEngine");
+
+	
 
 	// GLUT callbacks
 	glutDisplayFunc(display);

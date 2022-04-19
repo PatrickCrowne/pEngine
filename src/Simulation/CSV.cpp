@@ -80,4 +80,7 @@ CSV::CSV(std::string path)
 		up.push_back(glm::vec3(x, y, z));
 
 	}
+
+	fileStream.close();
+
 }

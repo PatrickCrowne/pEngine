@@ -21,7 +21,7 @@ void main() {
 	// Shade based on light
 	col *= clamp(dot(fragNorm, sunPos), 0, 1);
 	// Ambient color
-	col.xyz += vec3(0.08, 0.11, 0.21);
+	col.xyz += vec3(1, 1, 1) * 0.1f;
 
 	vec3 camOffset = normalize(camPos - (fragPos + modelPos));
 

@@ -39,6 +39,8 @@ void GLState::initializeGL() {
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 
+	glEnable(GL_MULTISAMPLE);
+
 	// TEMP
 	Scene* scene = new Scene();
 
