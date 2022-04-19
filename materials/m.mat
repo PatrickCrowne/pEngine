@@ -6,5 +6,5 @@ PROPERTY viewProjMatrix = VIEWPROJ_MATRIX
 PROPERTY color = vec3(1, 0.15, 0.05)
 PROPERTY reflectionStrength = float(0.1)
 PROPERTY camera = CAMREA_POSITION
-PROPERTY sampleTexture = tex(textures/reflection.png)
-PROPERTY reflectionTexture = tex(textures/reflection.png)
+PROPERTY sampleTexture = tex(textures/grass.png)
+PROPERTY reflectionTexture = tex(textures/skybox.png)

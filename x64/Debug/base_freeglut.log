@@ -1,2 +1,3 @@
-﻿  glstate.cpp
+﻿  Material.cpp
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Material.cpp(89,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   base_freeglut.vcxproj -> C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\x64\Debug\base_freeglut.exe

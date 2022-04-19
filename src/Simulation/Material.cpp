@@ -146,7 +146,9 @@ bool Material::registerAttribute(std::string name, int type, void* value) {
 	if (type == SHADER_INPUT_TYPE_3FV) vectorAttributes.emplace(name, *((glm::vec3*)value));
 	if (type == SHADER_INPUT_TYPE_4FV) matrixAttributes.emplace(name, *((glm::mat4*)value));
 	if (type == SHADER_INPUT_TYPE_1I) integerAttributes.emplace(name, *((int*)value));
-	if (type == SHADER_INPUT_TYPE_SAMPLER2D_1I) integerAttributes.emplace(name, *((int*)value));
+	if (type == SHADER_INPUT_TYPE_SAMPLER2D_1I) {
+		integerAttributes.emplace(name, *((int*)value));
+	}
 	return true;
 
 }
@@ -195,7 +197,7 @@ void Material::applyAttributes() {
 	std::map<std::string, int>::iterator intAttributeIterator;
 	for (intAttributeIterator = integerAttributes.begin(); intAttributeIterator != integerAttributes.end(); intAttributeIterator++)
 	{
-		glUniform1f(shader->uniformInputs.at(intAttributeIterator->first), intAttributeIterator->second);
+		glUniform1i(shader->uniformInputs.at(intAttributeIterator->first), intAttributeIterator->second);
 	}
 
 	// Iterate through all vec3 attributes and apply them
@@ -211,6 +213,8 @@ void Material::applyAttributes() {
 	{
 		glUniformMatrix4fv(shader->uniformInputs.at(mat4AttributeIterator->first), 1, GL_FALSE, glm::value_ptr(mat4AttributeIterator->second));
 	}
+
+	
 
 	int index = 0;
 	for (Texture *t : textures) {

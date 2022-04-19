@@ -24,26 +24,30 @@ vec3 reflect(vec3 ray, vec3 normal) {
 
 void main() {
 
-	vec3 col = fragColor;
+	vec3 col = texture(sampleTexture, fragUV).xyz;
 
 	// Shade based on light
-		col = mix(fragColor * 0.25f, fragColor, clamp(dot(fragNorm, sunPos), 0, 1));
+		col = mix(col * 0.25f, col, clamp(dot(fragNorm, sunPos), 0, 1));
 		vec3 camOffset = normalize(camPos - fragPos);
 		vec3 reflected = reflect(normalize(camOffset), normalize(fragNorm));
 
 		
 
 	// Blend Reflection
-		float r = sqrt(reflected.x*reflected.x+reflected.y*reflected.y+reflected.z*reflected.z);
-		float theta = atan(reflected.y,reflected.x) / r;
-		float phi = atan(sqrt(reflected.x*reflected.x+reflected.y*reflected.y),reflected.z) / r;
-		vec3 reflectedCol = texture(reflectionTexture, vec2(theta / 180 * 3.14159, phi / 180 * 3.14159)).xyz;
+
+		vec2 uv;
+		// Computing longitude
+		uv.x = atan( -reflected.z, -reflected.x ) * (1/3.1415f) + 0.5;
+		// Computing latitude
+		uv.y = reflected.y * 0.5 + 0.5;
+
+		vec3 reflectedCol = texture(reflectionTexture, uv).xyz;
 		float fresnel = 1 - clamp(dot(-normalize(camOffset), normalize(fragNorm)), 0, 1);
-		col = mix(col, reflectedCol, fresnel * reflectionStrength);
+		col = mix(col, reflectedCol, fresnel * reflectionStrength + 0.1f);
 
 	// Specular Highlight
 		vec3 specularCol = pow(clamp(dot(sunPos, reflected), 0, 1), 8) * vec3(1,1,1);
-		col += specularCol;
+		col += specularCol * 0.5f;
 
 	outCol = col;
 	

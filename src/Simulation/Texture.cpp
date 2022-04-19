@@ -21,7 +21,10 @@ Texture::Texture(std::string path) {
 
 void Texture::activeTexture(int textureIndex) {
 	// Activate the texture unit; more than one texture is allowed to use: GL_TEXTURE0, GL_TEXTURE1, ...
-	glActiveTexture(GL_TEXTURE0 + textureIndex);
+	if (textureIndex == 0) glActiveTexture(GL_TEXTURE0);
+	if (textureIndex == 1) glActiveTexture(GL_TEXTURE1);
+	if (textureIndex == 2) glActiveTexture(GL_TEXTURE2);
+	if (textureIndex == 3) glActiveTexture(GL_TEXTURE3);
 	glBindTexture(GL_TEXTURE_2D, id);  // bind the texture
 	glEnable(GL_TEXTURE_2D);
 }
