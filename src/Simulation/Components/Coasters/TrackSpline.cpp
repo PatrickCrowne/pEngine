@@ -8,7 +8,7 @@ TrackSpline::TrackSpline() {
     CSV* csv = new CSV("tracks/test.csv");
 
     for (int i = 0; i < csv->positions.size(); i++) {
-        addNode(csv->positions.at(i));
+        addNode(csv->positions.at(i), csv->up.at(i));
     }
     
     tieMesh = Mesh::getMesh("models/crossties/arrow_tie.obj", true);
@@ -17,9 +17,10 @@ TrackSpline::TrackSpline() {
 
 }
 
-bool TrackSpline::addNode(glm::vec3 position)
+bool TrackSpline::addNode(glm::vec3 position, glm::vec3 normal)
 {
     nodes.push_back(position);
+    nodeNormals.push_back(normal);
     return true;
 }
 
@@ -65,29 +66,45 @@ TrackMeshSegment* TrackSpline::getTrackMeshSegment(int index) {
 
 }
 
-glm::vec3 TrackSpline::generateRailVertices(glm::vec3 offset, float radius, std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 up) {
+glm::vec3 TrackSpline::generateRailVertices(
+    glm::vec3 offset, 
+    float radius, 
+    std::vector<glm::vec3>* vertices, 
+    std::vector<int>* triangles, 
+    std::vector<glm::vec2>* uvs, 
+    float length, 
+    glm::vec3 p0, 
+    glm::vec3 p1, 
+    glm::vec3 p2, 
+    glm::vec3 p3, 
+    glm::vec3 n0, 
+    glm::vec3 n1, 
+    glm::vec3 n2, 
+    glm::vec3 n3
+) {
 
     const int railSegmentCount = (int)(length * 10);
 
     glm::vec3 curPos;
     glm::vec3 lastPos;
     glm::vec3 forward, right;
-    glm::vec3 lastUp = glm::vec3(0, 1, 0);
+    glm::vec3 up = glm::normalize(bSpline(0, n0, n1, n2, n3));
 
     for (int i = 0; i <= railSegmentCount; i++) {
 
+        // Get a tangent vector from a slight offset in track positions
         curPos = bSpline((float)i / (float)railSegmentCount, p0, p1, p2, p3);
         lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.1f, p0, p1, p2, p3);
 
-        // TODO: Add rolling
-        
+        // Find the roll normal
+        up = glm::normalize(bSpline((float)i / (float)railSegmentCount, n0, n1, n2, n3));
 
+        // Create track relative axis
         forward = glm::normalize(lastPos - curPos);
         right = glm::normalize(glm::cross(forward, up));
         up = -glm::normalize(glm::cross(forward, right));
 
-        
-
+        // Store the current position on the center of rails
         glm::vec3 position = curPos;
         int vertexCount = vertices->size();
 
@@ -125,11 +142,9 @@ glm::vec3 TrackSpline::generateRailVertices(glm::vec3 offset, float radius, std:
 
         }
 
-        lastUp = up;
-
     }
 
-    return lastUp;
+    return up;
 
 }
 
@@ -162,7 +177,16 @@ glm::vec3 TrackSpline::getStartTangent(glm::vec3 p0, glm::vec3 p1, glm::vec3 p2,
 /// <param name="p2"></param>
 /// <param name="p3"></param>
 /// <param name="up"></param>
-void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 up) {
+void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length,
+    glm::vec3 p0,
+    glm::vec3 p1,
+    glm::vec3 p2,
+    glm::vec3 p3,
+    glm::vec3 n0,
+    glm::vec3 n1,
+    glm::vec3 n2,
+    glm::vec3 n3
+) {
 
     int railSegmentCount = (int)(length * 2) - 1;
     if (railSegmentCount < 1) railSegmentCount = 1;
@@ -170,18 +194,23 @@ void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vecto
     glm::vec3 curPos;
     glm::vec3 lastPos;
     glm::vec3 forward, right;
+    glm::vec3 up = glm::normalize(bSpline(0, n0, n1, n2, n3));
 
     for (int i = 0; i <= railSegmentCount; i++) {
 
+        // Get a tangent vector from a slight offset in track positions
         curPos = bSpline((float)i / (float)railSegmentCount, p0, p1, p2, p3);
-        lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.001f, p0, p1, p2, p3);
+        lastPos = bSpline(((float)i / (float)railSegmentCount) + 0.1f, p0, p1, p2, p3);
 
-        // TODO: Add rolling
+        // Find the roll normal
+        up = glm::normalize(bSpline((float)i / (float)railSegmentCount, n0, n1, n2, n3));
 
+        // Create track relative axis
         forward = glm::normalize(lastPos - curPos);
         right = glm::normalize(glm::cross(forward, up));
         up = -glm::normalize(glm::cross(forward, right));
 
+        // Store the current position on the center of rails
         glm::vec3 position = curPos;
         int vertexCount = vertices->size();
 
@@ -211,20 +240,22 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     if (index > nodes.size() - 1) return false;
 
     TrackMeshSegment* segment = getTrackMeshSegment(index);
-    glm::vec3 lastUp = getTrackMeshSegment(index - 1)->endNormal;
-    if (index - 1 <= 0) {
-        lastUp = glm::vec3(0, 1, 0);
-    }
-
 
     // Generate baked spline
     bakedSpline.clear();
     // Find the spline segment length
 
+    // Positions
     glm::vec3 p0 = nodes.at(clamp(index - 1, 0, nodes.size() - 1));
     glm::vec3 p1 = nodes.at(clamp(index,     0, nodes.size() - 1));
     glm::vec3 p2 = nodes.at(clamp(index + 1, 0, nodes.size() - 1));
     glm::vec3 p3 = nodes.at(clamp(index + 2, 0, nodes.size() - 1));
+
+    // Normals
+    glm::vec3 n0 = nodeNormals.at(clamp(index - 1, 0, nodes.size() - 1));
+    glm::vec3 n1 = nodeNormals.at(clamp(index, 0, nodes.size() - 1));
+    glm::vec3 n2 = nodeNormals.at(clamp(index + 1, 0, nodes.size() - 1));
+    glm::vec3 n3 = nodeNormals.at(clamp(index + 2, 0, nodes.size() - 1));
 
     // Move the track segment origin to where the first node is
     glm::vec3 startPos = bSpline(0, p0, p1, p2, p3);
@@ -252,12 +283,12 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     std::vector<glm::vec2> uvs;
     
     // Add Rails
-    generateRailVertices(glm::vec3(-0.6f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, lastUp);
-    generateRailVertices(glm::vec3(0.6f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, lastUp);
-    segment->endNormal = generateRailVertices(glm::vec3(0, -0.75f, 0), 0.15f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, lastUp);
+    generateRailVertices(glm::vec3(-0.6f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
+    generateRailVertices(glm::vec3(0.6f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
+    segment->endNormal = generateRailVertices(glm::vec3(0, -0.75f, 0), 0.15f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
 
     // Add Crossties
-    generateCrossties(&vertices, &triangles, &uvs, length, p0, p1, p2, p3, lastUp);
+    generateCrossties(&vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
 
     glm::vec3 tangent = getStartTangent(p0, p1, p2, p3);
 

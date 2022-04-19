@@ -34,5 +34,50 @@ CSV::CSV(std::string path)
 
 		positions.push_back(glm::vec3(x, y, z));
 
+		a = buffer.find_first_of("\t", a + 1);
+
+		b = buffer.find_first_of("\t", a + 1);
+		x = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		y = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		z = stof(buffer.substr(a + 1, b));
+
+		forward.push_back(glm::vec3(x, y, z));
+
+		a = buffer.find_first_of("\t", a + 1);
+
+		b = buffer.find_first_of("\t", a + 1);
+		x = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		y = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		z = stof(buffer.substr(a + 1, b));
+
+		left.push_back(glm::vec3(x, y, z));
+
+		a = buffer.find_first_of("\t", a + 1);
+
+		b = buffer.find_first_of("\t", a + 1);
+		x = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		y = stof(buffer.substr(a + 1, b));
+
+		a = b;
+		b = buffer.find_first_of("\t", a + 1);
+		z = stof(buffer.substr(a + 1, b));
+
+		up.push_back(glm::vec3(x, y, z));
+
 	}
 }

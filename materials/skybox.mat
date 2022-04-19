@@ -2,4 +2,4 @@ MATERIAL_NAME = "Skybox"
 VERTEX_SHADER = "shaders/sky_vert.glsl"
 FRAGMENT_SHADER = "shaders/sky_frag.glsl"
 PROPERTY xform = MODEL_MATRIX
-PROPERTY sampleTexture = tex(textures/sky1.jpg)
+PROPERTY sampleTexture = tex(textures/skybox.png)
