@@ -51,6 +51,9 @@ void GLState::initializeGL() {
 	SimObject* simObject3 = new SimObject("simobjects/skybox.simobj");
 	scene->registerSimObject(simObject3);
 
+	SimObject* simObject4 = new SimObject("simobjects/groundplane.simobj");
+	scene->registerSimObject(simObject4);
+
 	TrackSpline* trackSpline = new TrackSpline();
 
 	Simulator::activeScene = scene;

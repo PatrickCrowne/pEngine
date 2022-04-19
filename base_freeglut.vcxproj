@@ -213,6 +213,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="materials\bunny.mat" />
+    <None Include="materials\ground.mat" />
+    <None Include="shaders\world_frag.glsl" />
+    <None Include="shaders\world_vert.glsl" />
+    <None Include="simobjects\groundplane.simobj" />
     <None Include="materials\skybox.mat" />
     <None Include="shaders/v.glsl" />
     <None Include="shaders/f.glsl" />

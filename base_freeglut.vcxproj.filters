@@ -175,5 +175,9 @@
     <None Include="shaders\sky_vert.glsl" />
     <None Include="materials\skybox.mat" />
     <None Include="simobjects\skybox.simobj" />
+    <None Include="simobjects\groundplane.simobj" />
+    <None Include="materials\ground.mat" />
+    <None Include="shaders\world_vert.glsl" />
+    <None Include="shaders\world_frag.glsl" />
   </ItemGroup>
 </Project>
