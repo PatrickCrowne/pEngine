@@ -24,7 +24,8 @@ vec3 reflect(vec3 ray, vec3 normal) {
 
 void main() {
 
-	vec3 col = texture(sampleTexture, fragUV).xyz;
+	vec2 uvRail = vec2(fragUV.x, fragUV.y);
+	vec3 col = texture(sampleTexture, uvRail).xyz * fragColor;
 
 	// Shade based on light
 		col = mix(col * 0.25f, col, clamp(dot(fragNorm, sunPos), 0, 1));

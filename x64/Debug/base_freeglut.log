@@ -1,3 +1,29 @@
-﻿  Material.cpp
-C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Material.cpp(89,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+﻿  TrackSpline.cpp
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(109,43): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(215,43): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(249,62): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(249,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(249,34): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(250,62): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(250,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(250,34): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(251,62): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(251,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(251,34): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(252,62): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(252,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(252,34): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(255,68): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(255,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(255,40): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(256,64): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(256,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(256,40): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(257,68): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(257,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(257,40): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(258,68): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(258,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(258,40): warning C4244: 'argument': conversion from 'float' to 'const unsigned __int64', possible loss of data
+C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\src\Simulation\Components\Coasters\TrackSpline.cpp(45): warning C4715: 'TrackSpline::buildTrackMesh': not all control paths return a value
   base_freeglut.vcxproj -> C:\Users\patri\Documents\Purdue\CS334\Final Project\pEngine\x64\Debug\base_freeglut.exe

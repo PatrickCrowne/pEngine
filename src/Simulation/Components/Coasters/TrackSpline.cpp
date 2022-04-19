@@ -294,6 +294,7 @@ bool TrackSpline::buildTrackMeshSection(int index) {
 
     // Update the mesh
     if (triangles.size() > 0) {
+        uvs.clear();
         segment->getMesh()->updateMesh(vertices, triangles, uvs);
     }
 
