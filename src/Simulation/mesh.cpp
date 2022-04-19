@@ -69,6 +69,13 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
 			raw_normals.push_back(glm::vec3(stof(values[0]), stof(values[1]), stof(values[2])));
 
+		} else if (line.substr(0, 2) == "vt") {
+			// Read texture coorindates
+			int index1 = indexOfNumberLetter(line, 2);
+			int index2 = lastIndexOfNumberLetter(line);
+			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
+			glm::vec2 uv(stof(values[0]), stof(values[1]));
+			raw_uvs.push_back(uv);
 		} else if (line.substr(0, 3) == "vn ") {
 			// Read normal data
 			int index1 = indexOfNumberLetter(line, 2);
@@ -76,15 +83,7 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
 			raw_normals.push_back(glm::vec3(stof(values[0]), stof(values[1]), stof(values[2])));
 
-		} else if (line.substr(0, 3) == "vt ") {
-			// Read normal data
-			int index1 = indexOfNumberLetter(line, 2);
-			int index2 = lastIndexOfNumberLetter(line);
-			std::vector<std::string> values = split(line.substr(index1, index2 - index1 + 1), ' ');
-			raw_uvs.push_back(glm::vec2(stof(values[0]), stof(values[1])));
-
-		}
-		else if (line.substr(0, 3) == "vn ") {
+		} else if (line.substr(0, 3) == "vn ") {
 			// Read normal data
 			int index1 = indexOfNumberLetter(line, 2);
 			int index2 = lastIndexOfNumberLetter(line);
@@ -112,6 +111,13 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 					n_elements.push_back(stoul(v1[2]) - 1);
 					n_elements.push_back(stoul(v2[2]) - 1);
 					n_elements.push_back(stoul(v3[2]) - 1);
+				}
+
+				// Check for uvs
+				if (v1.size() >= 3 && v1[1].length() > 0) {
+					uv_elements.push_back(stoul(v1[1]) - 1);
+					uv_elements.push_back(stoul(v2[1]) - 1);
+					uv_elements.push_back(stoul(v3[1]) - 1);
 				}
 
 			}
@@ -145,16 +151,16 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 	vertices = std::vector<Vertex>(v_elements.size());
 	for (int i = 0; i < int(v_elements.size()); i += 3) {
 		// Store positions
-		vertices[i+0].pos = raw_vertices[v_elements[i+0]];
-		vertices[i+1].pos = raw_vertices[v_elements[i+1]];
-		vertices[i+2].pos = raw_vertices[v_elements[i+2]];
+		vertices[i + 0].pos = raw_vertices[v_elements[i + 0]];
+		vertices[i + 1].pos = raw_vertices[v_elements[i + 1]];
+		vertices[i + 2].pos = raw_vertices[v_elements[i + 2]];
 
 		// Check for normals
 		if (n_elements.size() > 0) {
 			// Store normals
-			vertices[i + 0].norm = raw_normals[n_elements[i+0]];
-			vertices[i + 1].norm = raw_normals[n_elements[i+1]];
-			vertices[i + 2].norm = raw_normals[n_elements[i+2]];
+			vertices[i + 0].norm = raw_normals[n_elements[i + 0]];
+			vertices[i + 1].norm = raw_normals[n_elements[i + 1]];
+			vertices[i + 2].norm = raw_normals[n_elements[i + 2]];
 		} else {
 			// Calculate normal
 			vertices[i + 0].norm = glm::normalize(accumulated_normals[v_elements[i + 0]]);
@@ -162,11 +168,11 @@ void Mesh::load(std::string filename, bool keepLocalGeometry) {
 			vertices[i + 2].norm = glm::normalize(accumulated_normals[v_elements[i + 2]]);
 		}
 
-		// Check for uvs
-		if (raw_uvs.size() > 0) {
-			vertices[i + 0].uv = raw_uvs[v_elements[i + 0]];
-			vertices[i + 1].uv = raw_uvs[v_elements[i + 1]];
-			vertices[i + 2].uv = raw_uvs[v_elements[i + 2]];
+		if (uv_elements.size() > 0) {
+			// Apply existing uvs found.
+			vertices[i + 0].uv = raw_uvs[uv_elements[i + 0]];
+			vertices[i + 1].uv = raw_uvs[uv_elements[i + 1]];
+			vertices[i + 2].uv = raw_uvs[uv_elements[i + 2]];
 		}
 		else {
 			// Calculate uvs
