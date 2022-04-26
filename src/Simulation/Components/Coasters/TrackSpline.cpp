@@ -401,21 +401,27 @@ void TrackSpline::update() {
 
     if (KeyRegistry::pressedKeys['i']) {
         editNode(editIndex, glm::vec3(0, 0, 1));
+        KeyRegistry::pressedKeys['i'] = false;
     }
     if (KeyRegistry::pressedKeys['k']) {
         editNode(editIndex, glm::vec3(0, 0, -1));
+        KeyRegistry::pressedKeys['k'] = false;
     }
     if (KeyRegistry::pressedKeys['j']) {
         editNode(editIndex, glm::vec3(1, 0, 0));
+        KeyRegistry::pressedKeys['j'] = false;
     }
     if (KeyRegistry::pressedKeys['l']) {
         editNode(editIndex, glm::vec3(-1, 0, 0));
+        KeyRegistry::pressedKeys['l'] = false;
     }
     if (KeyRegistry::pressedKeys['u']) {
         editNode(editIndex, glm::vec3(0, 1, 0));
+        KeyRegistry::pressedKeys['u'] = false;
     }
     if (KeyRegistry::pressedKeys['h']) {
         editNode(editIndex, glm::vec3(0, -1, 0));
+        KeyRegistry::pressedKeys['h'] = false;
     }
 
     //
