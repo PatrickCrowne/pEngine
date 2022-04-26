@@ -2,18 +2,66 @@
 #include "../../CSV.h"
 
 #define PI 3.14159265f
+#define DESIRED_STEP_SIZE 0.5
 
-TrackSpline::TrackSpline() {
+/// <summary>
+/// Clamps value t between m < M
+/// </summary>
+float clamp(float t, float m, float M) {
+    if (t < m) return m;
+    if (t > M) return M;
+    return t;
+}
 
-    CSV* csv = new CSV("tracks/test2.csv");
+TrackSpline::TrackSpline(std::string nodes, CoasterStyle* style) {
+
+    CSV* csv = new CSV(nodes);
+    coasterStyle = style;
 
     for (int i = 0; i < csv->positions.size(); i++) {
         addNode(csv->positions.at(i), csv->up.at(i));
     }
     
-    tieMesh = Mesh::getMesh("models/crossties/arrow_tie.obj", true);
+    tieMesh = Mesh::getMesh(style->crosstieModel, true);
 
+    // Buil the visible mesh that the spline uses 
+    // to represent the track visually
     buildTrackMesh();
+
+    // Generate a baked spline so the trains can run on it smoothly
+    GenerateBakedSpline();
+
+}
+
+glm::vec3 TrackSpline::getSplinePosition(float t) {
+
+    int index = (int)t;
+    int size = nodes.size() - 1;
+
+    // Positions
+    glm::vec3 p0 = nodes.at(clamp(index - 1, 0, size));
+    glm::vec3 p1 = nodes.at(clamp(index, 0, size));
+    glm::vec3 p2 = nodes.at(clamp(index + 1, 0, size));
+    glm::vec3 p3 = nodes.at(clamp(index + 2, 0, size));
+
+    // Return the correct
+    return bSpline(t - index, p0, p1, p2, p3);
+
+}
+
+glm::vec3 TrackSpline::getSplineNormal(float t) {
+
+    int index = (int)t;
+    int size = nodeNormals.size() - 1;
+
+    // Positions
+    glm::vec3 p0 = nodeNormals.at(clamp(index - 1, 0, size));
+    glm::vec3 p1 = nodeNormals.at(clamp(index, 0, size));
+    glm::vec3 p2 = nodeNormals.at(clamp(index + 1, 0, size));
+    glm::vec3 p3 = nodeNormals.at(clamp(index + 2, 0, size));
+
+    // Return the correct
+    return glm::normalize(bSpline(t - index, p0, p1, p2, p3));
 
 }
 
@@ -23,7 +71,47 @@ TrackSpline::TrackSpline() {
 /// </summary>
 void TrackSpline::GenerateBakedSpline() {
 
+    float trackPos = 0;
+    float stepSize = 0.1f;
+    glm::vec3 lastPos = getSplinePosition(0);
+    glm::vec3 lastUp = getSplineNormal(0);
+    glm::vec3 curPos = lastPos;
+    glm::vec3 curUp = lastUp;
 
+    bakedSpline.clear();
+    bakedSpline.push_back(lastPos);
+    bakedNormal.clear();
+    bakedNormal.push_back(lastUp);
+
+    while (trackPos < nodes.size()) {
+
+        // Newton's method to find the correct step interval size
+        for (int iterations = 0; iterations < 5; iterations++) {
+            curPos = getSplinePosition(trackPos + stepSize);
+            glm::vec3 offset = curPos - lastPos;
+            stepSize *= DESIRED_STEP_SIZE / offset.length();
+        }
+        
+        if (stepSize < 0.0001f) stepSize = 0.1f;
+        if (stepSize > 1) stepSize = 1.0f;
+
+        std::cout << stepSize << " " << bakedSpline.size() << "\n";
+
+        // Increment along the track
+        trackPos += stepSize;
+        lastPos = getSplinePosition(trackPos);
+        lastUp = getSplineNormal(trackPos);
+        // Add to the baked array
+        bakedSpline.push_back(lastPos);
+        bakedNormal.push_back(lastUp);
+
+    }
+
+}
+
+float TrackSpline::length() {
+
+    return bakedSpline.size() * DESIRED_STEP_SIZE;
 
 }
 
@@ -35,7 +123,20 @@ void TrackSpline::GenerateBakedSpline() {
 /// <returns></returns>
 glm::vec3 TrackSpline::getPosition(float t) {
 
-    return glm::vec3();
+    // Scale T so it's relative to the step size used to build the track
+    t /= DESIRED_STEP_SIZE;
+    int index = (int)t;
+    // Store how long the spline is
+    int size = bakedSpline.size() - 1;
+
+    // Positions
+    glm::vec3 p0 = bakedSpline.at(clamp(index - 1, 0, size));
+    glm::vec3 p1 = bakedSpline.at(clamp(index, 0, size));
+    glm::vec3 p2 = bakedSpline.at(clamp(index + 1, 0, size));
+    glm::vec3 p3 = bakedSpline.at(clamp(index + 2, 0, size));
+
+    // Return the correct
+    return cubicSpline(t - index, p0, p1, p2, p3);
 
 }
 
@@ -47,7 +148,23 @@ glm::vec3 TrackSpline::getPosition(float t) {
 /// <returns></returns>
 glm::quat TrackSpline::getRotation(float t) {
 
-    return glm::quat();
+    // Scale T so it's relative to the step size used to build the track
+    t /= DESIRED_STEP_SIZE;
+    int index = (int)t;
+    // Store how long the spline is
+    int size = bakedNormal.size() - 1;
+
+    // Positions
+    glm::vec3 p0 = bakedNormal.at(clamp(index - 1, 0, size));
+    glm::vec3 p1 = bakedNormal.at(clamp(index, 0, size));
+    glm::vec3 p2 = bakedNormal.at(clamp(index + 1, 0, size));
+    glm::vec3 p3 = bakedNormal.at(clamp(index + 2, 0, size));
+
+    // Return the correct
+    glm::vec3 up = glm::normalize(cubicSpline(t - index, p0, p1, p2, p3));
+    glm::vec3 forward = glm::normalize(getPosition((t * DESIRED_STEP_SIZE) + 0.1f) - getPosition((t * DESIRED_STEP_SIZE) - 0.1f));
+
+    return glm::quatLookAt(forward, up);
 
 }
 
@@ -78,18 +195,7 @@ bool TrackSpline::buildTrackMesh()
 
 }
 
-/// <summary>
-/// Clamps value t between m < M
-/// </summary>
-/// <param name="t"></param>
-/// <param name="m"></param>
-/// <param name="M"></param>
-/// <returns></returns>
-float clamp(float t, float m, float M) {
-    if (t < m) return m;
-    if (t > M) return M;
-    return t;
-}
+
 
 TrackMeshSegment* TrackSpline::getTrackMeshSegment(int index) {
 
@@ -317,9 +423,12 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     std::vector<glm::vec2> uvs;
     
     // Add Rails
-    generateRailVertices(glm::vec3(-0.6f, 0, PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
-    generateRailVertices(glm::vec3(0.6f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
-    segment->endNormal = generateRailVertices(glm::vec3(0, -0.75f, 0), 0.15f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
+    for (int i = 0; i < coasterStyle->railPos.size(); i++) {
+        segment->endNormal = generateRailVertices(coasterStyle->railPos[i].offset, coasterStyle->railPos[i].radius, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
+    }
+    
+    //generateRailVertices(glm::vec3(0.6f, 0, -PI / 2.0f), 0.075f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
+    //generateRailVertices(glm::vec3(0, -0.75f, 0), 0.15f, &vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
 
     // Add Crossties
     generateCrossties(&vertices, &triangles, &uvs, length, p0, p1, p2, p3, n0, n1, n2, n3);
@@ -359,5 +468,27 @@ glm::vec3 TrackSpline::bSpline(float t, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2
         (((4.0f - (6.0f * tt) + (3.0f * ttt)) / 6.0f) * p1) +
         (((1.0f + (3.0f * t) + (3.0f * tt) - (3.0f * ttt)) / 6.0f) * p2) +
         ((ttt / 6.0f) * p3);
+
+}
+
+/// <summary>
+/// Interpolates between the points using the cubic spline algorithm
+/// </summary>
+/// <param name="t"></param>
+/// <param name="p0"></param>
+/// <param name="p1"></param>
+/// <param name="p2"></param>
+/// <param name="p3"></param>
+/// <returns></returns>
+glm::vec3 TrackSpline::cubicSpline(float t, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3) {
+
+    float tt = t * t;
+    float ttt = t * t * t;
+
+    return
+        ((p0 * (-ttt + (2.0f * tt) - t)) +
+        (p1 * ((3.0f * ttt) - (5.0f * tt) + 2.0f)) +
+        (p2 * ((-3.0f * ttt) + (4.0f * tt) + t)) +
+        (p3 * (ttt - tt))) / 2.0f;
 
 }

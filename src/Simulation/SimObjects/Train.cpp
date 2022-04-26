@@ -1,6 +1,6 @@
 #include "Train.h"
 #include "../Components/Coasters/CoasterTrain.h"
-Train::Train(float trackPosition, int carCount) {
+Train::Train(float trackPosition, int carCount, TrackSpline* track) {
 
 	for (int i = 0; i < carCount; i++) {
 		addCar();
@@ -8,7 +8,7 @@ Train::Train(float trackPosition, int carCount) {
 
 	trackPos = trackPosition;
 
-	addComponent(new CoasterTrain(this));
+	addComponent(new CoasterTrain(this, track));
 
 }
 

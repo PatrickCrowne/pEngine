@@ -1,0 +1,6 @@
+RAIL vec3(-0.6, 0, 0) float(0.075)
+RAIL vec3(0.6, 0, 0) float(0.075)
+RAIL vec3(0, -0.75, 0) float(0.15)
+TIE "models/crossties/arrow_tie.obj"
+FRONTCAR "models/cars/arrow_front.obj"
+MIDDLECAR "models/cars/arrow_middle.obj"

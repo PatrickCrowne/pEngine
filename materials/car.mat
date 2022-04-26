@@ -1,0 +1,11 @@
+MATERIAL_NAME = "Rail"
+VERTEX_SHADER = "shaders/v.glsl"
+FRAGMENT_SHADER = "shaders/f.glsl"
+PROPERTY modelMatrix = MODEL_MATRIX
+PROPERTY viewProjMatrix = VIEWPROJ_MATRIX
+PROPERTY color = vec3(0.2, 1, 0.1)
+PROPERTY reflectionStrength = float(0.1)
+PROPERTY camera = CAMREA_POSITION
+PROPERTY sampleTexture = tex(textures/track.png)
+PROPERTY reflectionTexture = tex(textures/reflection.jpg)
+PROPERTY lightSpaceMat = LIGHT_MATRIX

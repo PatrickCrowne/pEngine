@@ -6,9 +6,10 @@ class Car : public SimObject
 public:
 	Car(float);
 	~Car() {}
+	float carOffset;
 
 private:
-	float carOffset;
+	
 
 };
 

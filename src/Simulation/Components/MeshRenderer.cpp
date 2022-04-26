@@ -27,18 +27,6 @@ void MeshRenderer::Awake() {
 
 void MeshRenderer::Update() {
 
-	/*std::vector<int> triangles = {0, 1, 3, 0, 3, 2};
-	std::vector <glm::vec3> vertices;
-
-	vertices.push_back(glm::vec3(sin(Simulator::time) - 0.5f, 0, 0));
-	vertices.push_back(glm::vec3(sin(Simulator::time) + 0.5f, 0, 0));
-	vertices.push_back(glm::vec3(cos(Simulator::time) - 0.5f, 0, 1));
-	vertices.push_back(glm::vec3(cos(Simulator::time) + 0.5f, 0, 1));
-
-	mesh->updateMesh(vertices, triangles);
-
-	vertices.clear();
-	triangles.clear();*/
 
 }
 
@@ -48,10 +36,11 @@ glm::mat4 MeshRenderer::getModelMatrix() {
 
 	modelMatrix = glm::scale(modelMatrix, MeshRenderer::transform->scale);
 	modelMatrix = glm::translate(modelMatrix, MeshRenderer::transform->position);
-	glm::vec3 eulerAngles = glm::eulerAngles(MeshRenderer::transform->rotation);
-	modelMatrix = glm::rotate(modelMatrix, eulerAngles.x, glm::vec3(1, 0, 0));
-	modelMatrix = glm::rotate(modelMatrix, eulerAngles.y, glm::vec3(0, 1, 0));
-	modelMatrix = glm::rotate(modelMatrix, eulerAngles.z, glm::vec3(0, 0, 1));
+	modelMatrix = modelMatrix * glm::toMat4(MeshRenderer::transform->rotation);
+	//modelMatrix = glm::rotate(modelMatrix, eulerAngles.z, glm::vec3(0, 0, 1));
+	//modelMatrix = glm::rotate(modelMatrix, eulerAngles.x, glm::vec3(1, 0, 0));
+	//modelMatrix = glm::rotate(modelMatrix, eulerAngles.y, glm::vec3(0, 1, 0));
+	
 
 	return modelMatrix;
 

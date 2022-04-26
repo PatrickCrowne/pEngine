@@ -11,6 +11,8 @@
 #include "Simulation/Simulator.h"
 #include "Simulation/AssetReader.h"
 #include "Simulation/Components/Coasters/TrackSpline.h"
+#include "Simulation/Components/Coasters/CoasterTrain.h"
+#include "Simulation/SimObjects/Coaster.h"
 
 std::vector<MeshRenderer*> GLState::renderers;
 std::vector<MeshRenderer*> GLState::uiRenderers;
@@ -60,7 +62,9 @@ void GLState::initializeGL() {
 	SimObject* simObject4 = new SimObject("simobjects/groundplane.simobj");
 	scene->registerSimObject(simObject4);
 
-	TrackSpline* trackSpline = new TrackSpline();
+
+	Coaster* coaster = new Coaster("tracks/test2.csv", "coasterstyles/int.style", scene);
+	scene->registerSimObject(coaster);
 
 	Simulator::activeScene = scene;
 

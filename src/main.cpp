@@ -155,22 +155,24 @@ void mouseMove(int x, int y) {
 	//}
 }
 
+#define CAM_SPEED 60
+
 // Called when there are no events to process (i.e. every frame)
 void idle() {
 
 	glm::vec3 moveOffset = glm::vec3(0, 0, 0);
 
 	if (pressedKeys['w']) { // W Key
-		moveOffset += glm::vec3(0, 0, Simulator::deltaTime * 15.0f);
+		moveOffset += glm::vec3(0, 0, Simulator::deltaTime * CAM_SPEED);
 	}
 	if (pressedKeys['s']) { // S Key
-		moveOffset += glm::vec3(0, 0, -Simulator::deltaTime * 15.0f);
+		moveOffset += glm::vec3(0, 0, -Simulator::deltaTime * CAM_SPEED);
 	}
 	if (pressedKeys['a']) { // A Key
-		moveOffset += glm::vec3(Simulator::deltaTime * 15.0f, 0, 0);
+		moveOffset += glm::vec3(Simulator::deltaTime * CAM_SPEED, 0, 0);
 	}
 	if (pressedKeys['d']) { // D Key
-		moveOffset += glm::vec3(-Simulator::deltaTime * 15.0f, 0, 0);
+		moveOffset += glm::vec3(-Simulator::deltaTime * CAM_SPEED, 0, 0);
 	}
 
 	glState->moveCamera(moveOffset);
