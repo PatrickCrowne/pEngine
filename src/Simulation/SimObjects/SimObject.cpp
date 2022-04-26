@@ -79,6 +79,8 @@ SimObject::SimObject(std::string simObjectConfigFile) {
 
 }
 
+
+
 /// <summary>
 /// Called upon the destruction of a SimObject
 /// </summary>

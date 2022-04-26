@@ -11,17 +11,12 @@
 Coaster::Coaster(std::string nodes, std::string style, Scene* scene)
 {
 
-	std::cout << "lol\n";
-
 	// Configure the style
 	parseStyle(style);
 
-
 	// Create a new track spline from the node list
 	TrackSpline* trackSpline = new TrackSpline(nodes, coasterStyle);
-
-	
-
+	scene->registerSimObject(trackSpline);
 	// Add a new train
 	Train *train = new Train(20, 6, trackSpline);
 	scene->registerSimObject(train);

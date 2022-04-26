@@ -11,7 +11,7 @@
 #define SPLINE_ITERATION_COUNT 5
 #define SPLINE_RAIL_RESOLUTION 12
 
-class TrackSpline
+class TrackSpline : public SimObject
 {
 
 public:
@@ -25,10 +25,12 @@ public:
 	glm::quat getRotation(float t);
 	glm::vec3 getSplinePosition(float t);
 	glm::vec3 getSplineNormal(float t);
+	void editNode(int index, glm::vec3 offset);
 	float length();
-
+	void update();
 
 private:
+	
 	glm::vec3 getStartTangent(glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
 	glm::vec3 generateRailVertices(glm::vec3 offset, float radius, std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3, glm::vec3, glm::vec3, glm::vec3);
 	void generateCrossties(std::vector<glm::vec3>* vertices, std::vector<int>* triangles, std::vector<glm::vec2>* uvs, float length, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3, glm::vec3, glm::vec3, glm::vec3);

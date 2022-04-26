@@ -1,8 +1,9 @@
 #include "TrackSpline.h"
 #include "../../CSV.h"
-
+#include "../../Simulator.h"
+#include "../../../main.hpp"
 #define PI 3.14159265f
-#define DESIRED_STEP_SIZE 0.5
+#define DESIRED_STEP_SIZE 0.5f
 
 /// <summary>
 /// Clamps value t between m < M
@@ -29,7 +30,22 @@ TrackSpline::TrackSpline(std::string nodes, CoasterStyle* style) {
     buildTrackMesh();
 
     // Generate a baked spline so the trains can run on it smoothly
+    
+
     GenerateBakedSpline();
+
+}
+
+void TrackSpline::editNode(int index, glm::vec3 offset) {
+
+    int size = nodes.size() - 1;
+    index = clamp(index, 0, size);
+    nodes[index] += offset;
+
+    if (index - 2 > 0) buildTrackMeshSection(index - 2);
+    if (index - 1 > 0) buildTrackMeshSection(index - 1);
+    buildTrackMeshSection(index);
+    if (index + 1 < size) buildTrackMeshSection(index + 1);
 
 }
 
@@ -85,17 +101,19 @@ void TrackSpline::GenerateBakedSpline() {
 
     while (trackPos < nodes.size()) {
 
+        glm::vec3 offset;
+
         // Newton's method to find the correct step interval size
         for (int iterations = 0; iterations < 5; iterations++) {
             curPos = getSplinePosition(trackPos + stepSize);
-            glm::vec3 offset = curPos - lastPos;
-            stepSize *= DESIRED_STEP_SIZE / offset.length();
+            offset = curPos - lastPos;
+            stepSize *= DESIRED_STEP_SIZE / glm::length(offset);
         }
+
         
+
         if (stepSize < 0.0001f) stepSize = 0.1f;
         if (stepSize > 1) stepSize = 1.0f;
-
-        std::cout << stepSize << " " << bakedSpline.size() << "\n";
 
         // Increment along the track
         trackPos += stepSize;
@@ -368,6 +386,41 @@ void TrackSpline::generateCrossties(std::vector<glm::vec3>* vertices, std::vecto
 
 }
 
+int editIndex = 0;
+
+void TrackSpline::update() {
+
+    if (KeyRegistry::pressedKeys['=']) {
+        editIndex++;
+        KeyRegistry::pressedKeys['='] = false;
+    }
+    if (KeyRegistry::pressedKeys['-']) {
+        editIndex--;
+        KeyRegistry::pressedKeys['-'] = false;
+    }
+
+    if (KeyRegistry::pressedKeys['i']) {
+        editNode(editIndex, glm::vec3(0, 0, 1));
+    }
+    if (KeyRegistry::pressedKeys['k']) {
+        editNode(editIndex, glm::vec3(0, 0, -1));
+    }
+    if (KeyRegistry::pressedKeys['j']) {
+        editNode(editIndex, glm::vec3(1, 0, 0));
+    }
+    if (KeyRegistry::pressedKeys['l']) {
+        editNode(editIndex, glm::vec3(-1, 0, 0));
+    }
+    if (KeyRegistry::pressedKeys['u']) {
+        editNode(editIndex, glm::vec3(0, 1, 0));
+    }
+    if (KeyRegistry::pressedKeys['h']) {
+        editNode(editIndex, glm::vec3(0, -1, 0));
+    }
+
+    //
+
+}
 
 /// <summary>
 /// Builds a 
@@ -380,10 +433,6 @@ bool TrackSpline::buildTrackMeshSection(int index) {
     if (index > nodes.size() - 1) return false;
 
     TrackMeshSegment* segment = getTrackMeshSegment(index);
-
-    // Generate baked spline
-    bakedSpline.clear();
-    // Find the spline segment length
 
     // Positions
     glm::vec3 p0 = nodes.at(clamp(index - 1, 0, nodes.size() - 1));

@@ -21,6 +21,7 @@ bool Scene::updateScene() {
 	// Itrate through scene object array and update all components
 	for (SimObject *simObj : Scene::sceneObjects) {
 		simObj->updateComponents();
+		simObj->update();
 	}
 	return true;
 

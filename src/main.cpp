@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "Simulation/Simulator.h"
 #include "glstate.hpp"
+#include "main.hpp"
 #include <GL/freeglut.h>
 
 namespace fs = std::filesystem;
@@ -11,11 +12,12 @@ namespace fs = std::filesystem;
 // Menu identifiers
 const int MENU_EXIT = 1;					// Exit application
 
+bool KeyRegistry::pressedKeys[512];
+
 // OpenGL state
 std::unique_ptr<GLState> glState;
 
 // Pressed key list
-bool pressedKeys[512];
 
 // Initialization functions
 void initGLUT(int* argc, char** argv);
@@ -108,12 +110,12 @@ void reshape(GLint width, GLint height) {
 
 // Called when a key is pressed
 void keyPress(unsigned char key, int x, int y) {
-	pressedKeys[key] = true;
+	KeyRegistry::pressedKeys[key] = true;
 }
 
 // Called when a key is released
 void keyRelease(unsigned char key, int x, int y) {
-	pressedKeys[key] = false;
+	KeyRegistry::pressedKeys[key] = false;
 	switch (key) {
 	case 27:	// Escape key
 		menu(MENU_EXIT);
@@ -162,16 +164,16 @@ void idle() {
 
 	glm::vec3 moveOffset = glm::vec3(0, 0, 0);
 
-	if (pressedKeys['w']) { // W Key
+	if (KeyRegistry::pressedKeys['w']) { // W Key
 		moveOffset += glm::vec3(0, 0, Simulator::deltaTime * CAM_SPEED);
 	}
-	if (pressedKeys['s']) { // S Key
+	if (KeyRegistry::pressedKeys['s']) { // S Key
 		moveOffset += glm::vec3(0, 0, -Simulator::deltaTime * CAM_SPEED);
 	}
-	if (pressedKeys['a']) { // A Key
+	if (KeyRegistry::pressedKeys['a']) { // A Key
 		moveOffset += glm::vec3(Simulator::deltaTime * CAM_SPEED, 0, 0);
 	}
-	if (pressedKeys['d']) { // D Key
+	if (KeyRegistry::pressedKeys['d']) { // D Key
 		moveOffset += glm::vec3(-Simulator::deltaTime * CAM_SPEED, 0, 0);
 	}
 

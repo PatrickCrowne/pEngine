@@ -16,6 +16,7 @@ public:
 	SimObject::SimObject();
 	SimObject(std::string);
 	~SimObject();
+	virtual void update() {}
 	bool updateComponents();
 	bool fixedUpdateComponents();
 	void addComponent(Component*);

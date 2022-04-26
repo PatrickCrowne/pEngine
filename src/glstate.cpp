@@ -63,7 +63,7 @@ void GLState::initializeGL() {
 	scene->registerSimObject(simObject4);
 
 
-	Coaster* coaster = new Coaster("tracks/test2.csv", "coasterstyles/int.style", scene);
+	Coaster* coaster = new Coaster("tracks/taron.csv", "coasterstyles/int.style", scene);
 	scene->registerSimObject(coaster);
 
 	Simulator::activeScene = scene;
