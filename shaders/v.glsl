@@ -9,11 +9,13 @@ smooth out vec3 fragColor;
 smooth out vec3 fragPos;
 smooth out vec2 fragUV;
 smooth out vec3 camPos;
+smooth out vec4 lightFragPos;   // Fragment position in light space
 
 uniform mat4 viewProjMatrix;
 uniform mat4 modelMatrix;
 uniform vec3 color;
 uniform vec3 camera;
+uniform mat4 lightSpaceMat;  // World-to-light matrix location
 
 void main() {
 	// Transform vertex position
@@ -24,6 +26,7 @@ void main() {
 	fragColor = color;
 	camPos = -camera;	// Camera position is reversed, to make it relative
 
+	lightFragPos = lightSpaceMat * vec4(fragPos, 1.0);
 
 	gl_Position = viewProjMatrix * vec4(fragPos, 1.0);
 

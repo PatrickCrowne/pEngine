@@ -6,6 +6,7 @@
 class Texture {
 public:
 	Texture(std::string);
+	Texture();
 	~Texture() {}
 	// Disallow copy, move, & assignment
 	/*
@@ -18,8 +19,12 @@ public:
 
 	static std::map<std::string, GLuint> textures;
 
-protected:
 	GLuint id;     // Texture id
+	GLuint depth;
+
+protected:
+	
 	unsigned int prepareTexture(const char* filename);
+	unsigned int prepareDepthMap();
 };
 

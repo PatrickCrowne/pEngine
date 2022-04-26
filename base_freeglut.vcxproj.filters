@@ -90,6 +90,15 @@
     <ClCompile Include="src\Simulation\SimObjects\UI\UIPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Simulation\SimObjects\Car.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Simulation\SimObjects\Train.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Simulation\Components\Coasters\CoasterTrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src/gl_core_3_3.h">
@@ -158,6 +167,15 @@
     <ClInclude Include="src\Simulation\SimObjects\UI\UIPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Simulation\SimObjects\Car.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\SimObjects\Train.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Simulation\Components\Coasters\CoasterTrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders/f.glsl">
@@ -179,5 +197,7 @@
     <None Include="materials\ground.mat" />
     <None Include="shaders\world_vert.glsl" />
     <None Include="shaders\world_frag.glsl" />
+    <None Include="shaders\depth_v.glsl" />
+    <None Include="shaders\depth_f.glsl" />
   </ItemGroup>
 </Project>

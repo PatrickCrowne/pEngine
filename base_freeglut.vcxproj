@@ -163,8 +163,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Simulation\Components\Coasters\CoasterTrain.cpp" />
     <ClCompile Include="src\Simulation\CSV.cpp" />
     <ClCompile Include="src\Simulation\Components\Coasters\TrackSpline.cpp" />
+    <ClCompile Include="src\Simulation\SimObjects\Car.cpp" />
     <ClCompile Include="src\Simulation\SimObjects\Coaster.cpp" />
     <ClCompile Include="src\Simulation\ComponentRegistry.cpp" />
     <ClCompile Include="src/gl_core_3_3.c" />
@@ -180,6 +182,7 @@
     <ClCompile Include="src\Simulation\Scene.cpp" />
     <ClCompile Include="src\Simulation\Shader.cpp" />
     <ClCompile Include="src\Simulation\SimObjects\SimObject.cpp" />
+    <ClCompile Include="src\Simulation\SimObjects\Train.cpp" />
     <ClCompile Include="src\Simulation\Simulator.cpp" />
     <ClCompile Include="src\Simulation\Components\Transform.cpp" />
     <ClCompile Include="src\Simulation\SimObjects\TrackMeshSegment.cpp" />
@@ -188,8 +191,10 @@
     <ClCompile Include="src\Simulation\SimObjects\UI\UIPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Simulation\Components\Coasters\CoasterTrain.h" />
     <ClInclude Include="src\Simulation\CSV.h" />
     <ClInclude Include="src\Simulation\Components\Coasters\TrackSpline.h" />
+    <ClInclude Include="src\Simulation\SimObjects\Car.h" />
     <ClInclude Include="src\Simulation\SimObjects\Coaster.h" />
     <ClInclude Include="src\Simulation\ComponentRegistry.h" />
     <ClInclude Include="src/gl_core_3_3.h" />
@@ -204,6 +209,7 @@
     <ClInclude Include="src\Simulation\Scene.h" />
     <ClInclude Include="src\Simulation\Shader.h" />
     <ClInclude Include="src\Simulation\SimObjects\SimObject.h" />
+    <ClInclude Include="src\Simulation\SimObjects\Train.h" />
     <ClInclude Include="src\Simulation\Simulator.h" />
     <ClInclude Include="src\Simulation\Components\Transform.h" />
     <ClInclude Include="src\Simulation\SimObjects\TrackMeshSegment.h" />
@@ -214,6 +220,8 @@
   <ItemGroup>
     <None Include="materials\bunny.mat" />
     <None Include="materials\ground.mat" />
+    <None Include="shaders\depth_f.glsl" />
+    <None Include="shaders\depth_v.glsl" />
     <None Include="shaders\world_frag.glsl" />
     <None Include="shaders\world_vert.glsl" />
     <None Include="simobjects\groundplane.simobj" />

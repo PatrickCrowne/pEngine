@@ -27,6 +27,9 @@ private:
 	bool buildTrackMeshSection(int index);
 	TrackMeshSegment *getTrackMeshSegment(int);
 	glm::vec3 bSpline(float t, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3);
+	glm::vec3 getPosition(float t);
+	glm::quat getRotation(float t);
+	void GenerateBakedSpline();
 	std::vector<glm::vec3> nodes;
 	std::vector<glm::vec3> nodeNormals;
 	std::map<int, TrackMeshSegment*> trackSegments;

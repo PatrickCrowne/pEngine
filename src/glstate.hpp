@@ -47,6 +47,8 @@ public:
 	};
 
 	static glm::vec3 camPos;		// Camera euclidean coordinates
+	Shader* depthShader;
+	Texture* depthTexture;
 
 protected:
 

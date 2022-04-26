@@ -44,6 +44,9 @@ void GLState::initializeGL() {
 	// TEMP
 	Scene* scene = new Scene();
 
+	depthShader = new Shader("shaders/depth_v.glsl", "shaders/depth_f.glsl");
+	depthTexture = new Texture();
+
 	SimObject* simObject = new SimObject("simobjects/bunny.simobj");
 	scene->registerSimObject(simObject);
 
@@ -52,6 +55,7 @@ void GLState::initializeGL() {
 
 	SimObject* simObject3 = new SimObject("simobjects/skybox.simobj");
 	scene->registerSimObject(simObject3);
+	simObject3->getComponent<MeshRenderer>()->shadowCaster = false;
 
 	SimObject* simObject4 = new SimObject("simobjects/groundplane.simobj");
 	scene->registerSimObject(simObject4);
@@ -102,6 +106,35 @@ void GLState::unregisterUIRenderer(MeshRenderer* renderer) {
 // Called when window requests a screen redraw
 void GLState::paintGL() {
 	// Clear the color and depth buffers
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	// Pass 1: Shadow map
+	glUseProgram(depthShader->compiledShaderId);
+
+	glm::mat4 lightProj = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 0.1f, 10.0f);
+	glm::mat4 lightView = glm::lookAt(glm::vec3(1,1,1) - camPos, glm::vec3(0,0,0) - camPos, glm::vec3(0, 1, 0));
+	glm::mat4 lightSpaceMat = lightProj * lightView;
+
+	// Prepare before rendering
+	glViewport(0, 0, 2048, 2048);
+	glBindFramebuffer(GL_FRAMEBUFFER, depthTexture->id);
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+
+	glCullFace(GL_FRONT);  // Fix peter panning
+	for (MeshRenderer* renderer : renderers) {
+		renderer->lightSpaceMat = lightSpaceMat;
+		if (renderer->shadowCaster) {
+			renderer->Render(glm::mat4());
+		}
+	}
+	glCullFace(GL_BACK);  // Reset
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glUseProgram(0);
+
+
+	// Pass 2: the actual render
+	glViewport(0, 0, width, height);  // Reset the viewport
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// Construct a transformation matrix for the camera

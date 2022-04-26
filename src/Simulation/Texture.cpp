@@ -19,6 +19,11 @@ Texture::Texture(std::string path) {
 	
 }
 
+Texture::Texture() {
+	id = prepareDepthMap();
+	textures.emplace("DEPTH", id);
+}
+
 void Texture::activeTexture(int textureIndex) {
 	// Activate the texture unit; more than one texture is allowed to use: GL_TEXTURE0, GL_TEXTURE1, ...
 	if (textureIndex == 0) glActiveTexture(GL_TEXTURE0);
@@ -78,4 +83,27 @@ unsigned int Texture::prepareTexture(const char* filename) {
 	assert(glGetError() == GL_NO_ERROR);
 
 	return texture;
+}
+
+unsigned int Texture::prepareDepthMap() {
+
+	GLuint depthMapFBO;
+	glGenFramebuffers(1, &depthMapFBO);  // Generate a frame buffer
+
+	glGenTextures(1, &depth);
+	glBindTexture(GL_TEXTURE_2D, depth);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, 2048, 2048, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	// Attach depth texture to the depth frame buffer
+	glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depth, 0);
+	glDrawBuffer(GL_NONE);
+	glReadBuffer(GL_NONE);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return depthMapFBO;
+
 }

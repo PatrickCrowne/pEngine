@@ -13,5 +13,8 @@ public:
 	void Awake();
 	void Render(glm::mat4);
 	void Update();
+	bool shadowCaster = true;
+	glm::mat4 MeshRenderer::getModelMatrix();
+	glm::mat4 lightSpaceMat;
 };
 

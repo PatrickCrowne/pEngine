@@ -7,4 +7,5 @@ PROPERTY color = vec3(1, 0.15, 0.05)
 PROPERTY reflectionStrength = float(0.1)
 PROPERTY camera = CAMREA_POSITION
 PROPERTY sampleTexture = tex(textures/track.png)
-PROPERTY reflectionTexture = tex(textures/skybox.png)
+PROPERTY reflectionTexture = tex(textures/reflection.jpg)
+PROPERTY lightSpaceMat = LIGHT_MATRIX

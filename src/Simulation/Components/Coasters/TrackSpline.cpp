@@ -17,6 +17,40 @@ TrackSpline::TrackSpline() {
 
 }
 
+/// <summary>
+/// Generates a normalized baked spline for the train to use 
+/// for more accurate velocity and position calculations
+/// </summary>
+void TrackSpline::GenerateBakedSpline() {
+
+
+
+}
+
+/// <summary>
+/// Returns the position of the track along the track at point t
+/// requires GenerateBakedSpline to have run at least once.
+/// </summary>
+/// <param name="t"></param>
+/// <returns></returns>
+glm::vec3 TrackSpline::getPosition(float t) {
+
+    return glm::vec3();
+
+}
+
+/// <summary>
+/// Returns the rotation of the track along the track at point t
+/// requires GenerateBakedSpline to have run at least once.
+/// </summary>
+/// <param name="t"></param>
+/// <returns></returns>
+glm::quat TrackSpline::getRotation(float t) {
+
+    return glm::quat();
+
+}
+
 bool TrackSpline::addNode(glm::vec3 position, glm::vec3 normal)
 {
     nodes.push_back(position);
